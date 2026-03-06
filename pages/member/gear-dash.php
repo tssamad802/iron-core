@@ -27,12 +27,19 @@ $records = $controller->fetch_records(
     $join,
     ['client_id' => $get_id]
 );
-$record = $records[0];
-$weekly_workouts = $record['duration'];
-$weekly_goal = $record['duration']; 
-$status_text = ($weekly_workouts >= ($weekly_goal / 2)) 
-    ? '↑ On track this week' 
-    : '↓ Behind schedule';
+
+if (!empty($records)) {
+    $record = $records[0];
+    $weekly_workouts = $record['duration'];
+    $weekly_goal = $record['duration']; 
+    $status_text = ($weekly_workouts >= ($weekly_goal / 2)) 
+        ? '↑ On track this week' 
+        : '↓ Behind schedule';
+} else {
+    $weekly_workouts = 0;
+    $weekly_goal = 0;
+    $status_text = 'No plan assigned';
+}
 // echo '<pre>';
 // print_r($records);
 // echo '</pre>';
