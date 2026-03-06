@@ -5,9 +5,38 @@ require_once './includes/middleware.php';
 require_once './includes/model.php';
 require_once './includes/control.php';
 $auth = new auth(['member']);
+$get_id = $auth->get_id();
 $db = new database();
 $conn = $db->connection();
 $controller = new controller($conn);
+$join = "JOIN plan_clients pc ON plan.id = pc.plan_id";
+$columns = [
+    'plan.id AS plan_id',
+    'plan.plan_name',
+    'plan.category',
+    'plan.days',
+    'plan.duration',
+    'plan.trainer_id',
+    'pc.client_id',
+    'pc.assigned_at'
+];
+
+$records = $controller->fetch_records(
+    'plan',
+    $columns,
+    $join,
+    ['client_id' => $get_id]
+);
+$record = $records[0];
+$weekly_workouts = $record['duration'];
+$weekly_goal = $record['duration']; 
+$status_text = ($weekly_workouts >= ($weekly_goal / 2)) 
+    ? '↑ On track this week' 
+    : '↓ Behind schedule';
+// echo '<pre>';
+// print_r($records);
+// echo '</pre>';
+// exit;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +67,7 @@ $controller = new controller($conn);
                 <button class="menu-btn" onclick="toggleSidebar()">☰</button>
             </div>
             <div class="topbar-right">
-                
+
                 <div class="topbar-profile">
                     <div
                         style="width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,var(--accent),#c23500);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;">
@@ -77,10 +106,10 @@ $controller = new controller($conn);
                         <div class="stat-lbl">Weekly Workouts</div>
                         <div class="stat-icon">🏋️</div>
                     </div>
-                    <div class="stat-val">4<span
+                    <div class="stat-val"> <?= $weekly_workouts ?><span
                             style="font-family:'Rajdhani',sans-serif;font-size:22px;color:var(--text-sec);letter-spacing:1px;">/6</span>
                     </div>
-                    <div class="stat-pill pill-up">↑ On track this week</div>
+                    <div class="stat-pill pill-up"><?= $status_text ?></div>
                 </div>
 
                 <div class="stat-card green anim-fade-up anim-d2">
