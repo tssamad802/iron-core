@@ -31,9 +31,9 @@ $records = $controller->fetch_records(
 if (!empty($records)) {
     $record = $records[0];
     $weekly_workouts = $record['duration'];
-    $weekly_goal = $record['duration']; 
-    $status_text = ($weekly_workouts >= ($weekly_goal / 2)) 
-        ? '↑ On track this week' 
+    $weekly_goal = $record['duration'];
+    $status_text = ($weekly_workouts >= ($weekly_goal / 2))
+        ? '↑ On track this week'
         : '↓ Behind schedule';
 } else {
     $weekly_workouts = 0;
