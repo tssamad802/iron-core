@@ -22,7 +22,7 @@ $column = [
     "diet.notes",
     "users.fullname"
 ];
-$fetching_plans = $controller->fetch_records('diet', $column, $join);
+$fetching_plans = $controller->fetch_records('diet', $column, $join, ['trainer_id' => $user_id]);
 // echo '<pre>';
 // print_r($fetching_plans);
 // echo '</pre>';
