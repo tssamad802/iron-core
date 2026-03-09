@@ -5,6 +5,7 @@ $current = basename($_SERVER['PHP_SELF'], '.php');
 $navItems = [
     ['href' => './trainer-dashboard', 'icon' => 'fas fa-th-large', 'label' => 'Dashboard', 'slug' => 'trainer-dashboard'],
     ['href' => './trainer-clients', 'icon' => 'fas fa-users', 'label' => 'My Clients', 'slug' => 'trainer-clients'],
+    ['href' => './member-plans', 'icon' => 'fas fa-id-card', 'label' => 'Members Plans', 'slug' => 'member-plan'],
     ['href' => './workout-plan', 'icon' => 'fas fa-dumbbell', 'label' => 'Workout Plans', 'slug' => 'workout-plan']
 ];
 ?>

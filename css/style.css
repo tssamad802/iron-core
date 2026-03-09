@@ -9171,3 +9171,1028 @@ body:has(.art-panel):not(:has(.sidebar)) {
     text-align: center;
   }
 }
+/* ══════════════════════════════════════════
+           MEMBER PLANS TABLE — PAGE-SPECIFIC STYLES
+        ══════════════════════════════════════════ */
+
+/* Page wrapper content offset */
+.plans-page-content {
+  padding: 26px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── Section header ── */
+.mp-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 26px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.mp-page-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 36px;
+  letter-spacing: 2px;
+  line-height: 1;
+  color: var(--text-prime);
+}
+
+.mp-page-sub {
+  font-size: 13px;
+  color: var(--text-sec);
+  margin-top: 4px;
+}
+
+/* ── Toolbar ── */
+.mp-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.mp-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.mp-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.mp-search {
+  position: relative;
+  width: 240px;
+}
+
+.mp-search i {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+  font-size: 13px;
+  pointer-events: none;
+}
+
+.mp-search input {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 9px 14px 9px 36px;
+  font-size: 13px;
+  color: var(--text-prime);
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: "DM Sans", sans-serif;
+}
+
+.mp-search input:focus {
+  border-color: var(--accent);
+}
+
+.mp-search input::placeholder {
+  color: var(--text-dim);
+}
+
+.mp-filter-select {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 9px 32px 9px 14px;
+  font-size: 13px;
+  color: var(--text-sec);
+  outline: none;
+  cursor: pointer;
+  min-width: 140px;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23555c70' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  transition: border-color 0.2s;
+  font-family: "DM Sans", sans-serif;
+}
+
+.mp-filter-select:focus {
+  border-color: var(--accent);
+  color: var(--text-prime);
+}
+
+.mp-filter-select option {
+  background: var(--bg-card);
+  color: var(--text-prime);
+}
+
+/* ── Card Shell ── */
+.mp-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  position: relative;
+}
+
+.mp-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--accent),
+    var(--accent2),
+    transparent
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Card Header ── */
+.mp-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-panel);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.mp-card-title {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-prime);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mp-card-title i {
+  color: var(--accent);
+}
+
+.mp-card-subtitle {
+  font-size: 12px;
+  color: var(--text-sec);
+  margin-top: 2px;
+}
+
+.mp-record-badge {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  background: var(--accent-dim);
+  border: 1px solid rgba(255, 69, 0, 0.3);
+  color: var(--accent);
+  padding: 4px 12px;
+  border-radius: 100px;
+}
+
+/* ── Table ── */
+.mp-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.mp-table-wrap::-webkit-scrollbar {
+  height: 4px;
+}
+.mp-table-wrap::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+
+.mp-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
+}
+
+.mp-table thead th {
+  padding: 13px 20px;
+  text-align: left;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.015);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.mp-table thead th.sortable {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.mp-table thead th.sortable:hover {
+  color: var(--text-sec);
+}
+.mp-table thead th.sort-asc,
+.mp-table thead th.sort-desc {
+  color: var(--accent);
+}
+
+.mp-table thead th .sort-icon {
+  margin-left: 4px;
+  font-size: 9px;
+  opacity: 0.45;
+}
+
+.mp-table thead th.sort-asc .sort-icon,
+.mp-table thead th.sort-desc .sort-icon {
+  opacity: 1;
+  color: var(--accent);
+}
+
+.mp-table tbody tr {
+  transition: background 0.15s;
+  animation: fadeUp 0.35s ease both;
+}
+
+.mp-table tbody tr:hover {
+  background: var(--bg-hover);
+}
+
+.mp-table tbody tr:not(:last-child) td {
+  border-bottom: 1px solid var(--border);
+}
+
+.mp-table td {
+  padding: 15px 20px;
+  color: var(--text-sec);
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+/* ── Member Cell ── */
+.mp-member-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mp-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
+}
+
+.mp-avatar.orange {
+  background: linear-gradient(135deg, #ff4500, #c23500);
+}
+.mp-avatar.blue {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+.mp-avatar.green {
+  background: linear-gradient(135deg, #22c55e, #15803d);
+}
+.mp-avatar.yellow {
+  background: linear-gradient(135deg, #f59e0b, #b45309);
+}
+.mp-avatar.purple {
+  background: linear-gradient(135deg, #a855f7, #7e22ce);
+}
+.mp-avatar.teal {
+  background: linear-gradient(135deg, #14b8a6, #0f766e);
+}
+.mp-avatar.rose {
+  background: linear-gradient(135deg, #f43f5e, #be123c);
+}
+.mp-avatar.sky {
+  background: linear-gradient(135deg, #0ea5e9, #0369a1);
+}
+
+.mp-member-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-prime);
+}
+
+.mp-member-id {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 2px;
+  font-family: "Rajdhani", sans-serif;
+  letter-spacing: 1px;
+}
+
+/* ── Plan Name ── */
+.mp-plan-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-prime);
+}
+
+/* ── Goal Badge ── */
+.mp-goal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 11px;
+  border-radius: 100px;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 1px solid;
+}
+
+.mp-goal-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.mp-goal-loss {
+  background: var(--red-dim);
+  color: var(--red);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+.mp-goal-loss::before {
+  background: var(--red);
+}
+
+.mp-goal-gain {
+  background: var(--green-dim);
+  color: var(--green);
+  border-color: rgba(34, 197, 94, 0.3);
+}
+.mp-goal-gain::before {
+  background: var(--green);
+}
+
+.mp-goal-muscle {
+  background: var(--accent-dim);
+  color: var(--accent);
+  border-color: rgba(255, 69, 0, 0.3);
+}
+.mp-goal-muscle::before {
+  background: var(--accent);
+}
+
+.mp-goal-maint {
+  background: var(--blue-dim);
+  color: var(--blue);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+.mp-goal-maint::before {
+  background: var(--blue);
+}
+
+/* ── Calories ── */
+.mp-calories {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 20px;
+  letter-spacing: 1px;
+  color: var(--text-prime);
+}
+
+.mp-calories-unit {
+  font-size: 10px;
+  font-family: "Rajdhani", sans-serif;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+  margin-left: 2px;
+}
+
+/* ── Duration ── */
+.mp-duration {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-sec);
+}
+
+.mp-duration i {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+/* ── Action Button ── */
+.mp-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border-radius: var(--radius-md);
+  font-family: "Rajdhani", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 69, 0, 0.4);
+  background: var(--accent-dim);
+  color: var(--accent);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.mp-action-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  box-shadow: 0 4px 18px rgba(255, 69, 0, 0.35);
+  transform: translateY(-1px);
+}
+
+.mp-action-btn:active {
+  transform: translateY(0);
+}
+
+/* ── Empty State ── */
+.mp-empty {
+  text-align: center;
+  padding: 72px 24px;
+  color: var(--text-dim);
+}
+
+.mp-empty i {
+  font-size: 48px;
+  opacity: 0.2;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.mp-empty h3 {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-sec);
+  margin-bottom: 6px;
+}
+
+.mp-empty p {
+  font-size: 13px;
+}
+
+/* ── Pagination ── */
+.mp-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-panel);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.mp-pag-info {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.mp-pag-info span {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.mp-pag-controls {
+  display: flex;
+  gap: 5px;
+}
+
+.mp-pag-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-sec);
+  font-size: 12px;
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+
+.mp-pag-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.mp-pag-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 3px 12px rgba(255, 69, 0, 0.35);
+}
+
+.mp-pag-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ══════════════════════════════════════════
+           MEAL MODAL
+        ══════════════════════════════════════════ */
+.mp-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 600;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.mp-modal-backdrop.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.mp-modal {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  max-width: 560px;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+  transform: translateY(28px) scale(0.97);
+  transition: transform 0.32s cubic-bezier(0.34, 1.2, 0.64, 1);
+  overflow: hidden;
+  position: relative;
+}
+
+.mp-modal-backdrop.open .mp-modal {
+  transform: translateY(0) scale(1);
+}
+
+.mp-modal::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+}
+
+/* Modal Header */
+.mp-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 22px 26px 18px;
+  flex-shrink: 0;
+}
+
+.mp-modal-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-md);
+  background: var(--accent-dim);
+  border: 1px solid rgba(255, 69, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.mp-modal-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 26px;
+  letter-spacing: 2px;
+  color: var(--text-prime);
+  line-height: 1.1;
+}
+
+.mp-modal-sub {
+  font-size: 12px;
+  color: var(--text-sec);
+  margin-top: 3px;
+}
+
+.mp-modal-close {
+  margin-left: auto;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: none;
+  color: var(--text-dim);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.18s;
+}
+
+.mp-modal-close:hover {
+  border-color: var(--red);
+  color: var(--red);
+  background: var(--red-dim);
+}
+
+.mp-modal-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0 26px;
+  flex-shrink: 0;
+}
+
+/* Modal Body */
+.mp-modal-body {
+  padding: 22px 26px;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.mp-modal-body::-webkit-scrollbar {
+  width: 4px;
+}
+.mp-modal-body::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+/* Member summary row inside modal */
+.mp-modal-member-row {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 14px 16px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-bottom: 6px;
+}
+
+.mp-modal-member-info .name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-prime);
+}
+
+.mp-modal-member-info .plan {
+  font-size: 12px;
+  color: var(--text-sec);
+  margin-top: 2px;
+}
+
+.mp-modal-meta-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+.mp-meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 11px;
+  border-radius: 100px;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-sec);
+}
+
+.mp-meta-chip i {
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+/* Meal Cards */
+.mp-meal-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.mp-meal-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.mp-meal-card:hover {
+  border-color: rgba(255, 69, 0, 0.2);
+}
+
+.mp-meal-card-head {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.mp-meal-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.mp-meal-icon.breakfast {
+  background: rgba(245, 158, 11, 0.13);
+  color: var(--yellow);
+}
+.mp-meal-icon.lunch {
+  background: rgba(255, 69, 0, 0.13);
+  color: var(--accent);
+}
+.mp-meal-icon.dinner {
+  background: rgba(59, 130, 246, 0.13);
+  color: var(--blue);
+}
+
+.mp-meal-label {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-prime);
+}
+
+.mp-meal-time {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 1px;
+}
+
+.mp-meal-cal-badge {
+  margin-left: auto;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+
+.mp-meal-cal-badge.breakfast {
+  color: var(--yellow);
+}
+.mp-meal-cal-badge.lunch {
+  color: var(--accent);
+}
+.mp-meal-cal-badge.dinner {
+  color: var(--blue);
+}
+
+.mp-meal-cal-unit {
+  font-size: 9px;
+  font-family: "Rajdhani", sans-serif;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  margin-left: 2px;
+}
+
+.mp-meal-card-body {
+  padding: 12px 16px;
+}
+
+.mp-meal-items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mp-meal-items li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-sec);
+}
+
+.mp-meal-items li::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  flex-shrink: 0;
+}
+
+.mp-meal-items li .mp-item-cal {
+  margin-left: auto;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--text-dim);
+}
+
+/* Total row */
+.mp-modal-total-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(255, 69, 0, 0.25);
+  border-radius: var(--radius-md);
+}
+
+.mp-total-label {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-sec);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mp-total-label i {
+  color: var(--accent);
+}
+
+.mp-total-val {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 28px;
+  letter-spacing: 1px;
+  color: var(--accent);
+}
+
+.mp-total-unit {
+  font-size: 11px;
+  font-family: "Rajdhani", sans-serif;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  margin-left: 3px;
+}
+
+/* Modal Footer */
+.mp-modal-footer {
+  padding: 12px 26px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.mp-btn-close-modal {
+  padding: 10px 22px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-sec);
+  font-family: "Rajdhani", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+
+.mp-btn-close-modal:hover {
+  border-color: var(--accent);
+  color: var(--text-prime);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .plans-page-content {
+    padding: 16px;
+  }
+
+  .mp-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .mp-toolbar-left,
+  .mp-toolbar-right {
+    width: 100%;
+  }
+  .mp-search {
+    width: 100%;
+  }
+
+  .mp-table .col-goal,
+  .mp-table .col-duration {
+    display: none;
+  }
+
+  .mp-modal-backdrop {
+    align-items: flex-end;
+    padding: 0;
+  }
+  .mp-modal {
+    max-width: 100%;
+    width: 100%;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    max-height: 92vh;
+  }
+  .mp-modal-header {
+    padding: 18px 18px 14px;
+  }
+  .mp-modal-body {
+    padding: 16px 18px;
+  }
+  .mp-modal-footer {
+    padding: 10px 18px 28px;
+  }
+  .mp-modal-divider {
+    margin: 0 18px;
+  }
+  .mp-modal-meta-chips {
+    margin-left: 0;
+    margin-top: 6px;
+  }
+  .mp-modal-member-row {
+    flex-wrap: wrap;
+  }
+
+  .mp-pagination {
+    justify-content: center;
+  }
+  .mp-pag-info {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 520px) {
+  .mp-table .col-calories {
+    display: none;
+  }
+  .mp-table td,
+  .mp-table thead th {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}
