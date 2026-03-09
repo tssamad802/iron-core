@@ -10,6 +10,8 @@ $router
     ->add('/trainer-clients', 'pages/trainer/clients.php')
     ->add('/gear-dashboard', 'pages/member/gear-dash.php')
     ->add('/myworkout', 'pages/member/myworkout.php')
+    ->add('/diet-plan', 'pages/member/diet-plan.php')
+    ->add('/diet-plan-script', 'includes/diet-plan.inc.php')
     ->add('/login-script', 'includes/login-script.php')
     ->add('/logout', 'includes/logout.inc.php')
     ->add('/admin-add-users', 'pages/admin/admin-users-add.php')
@@ -30,6 +32,7 @@ $router
     ->add('/plan-script', 'includes/plan.inc.php')
     ->add('/delete-plan', 'includes/delete-plan.inc.php')
     ->add('/assign-plan-clients', 'includes/assign-plan-clients.inc.php')
+    ->add('/delete_diet', 'includes/delete_diet.php')
     ->add('/payment-script', './includes/payment.inc.php');
 
 $router->dispatch();

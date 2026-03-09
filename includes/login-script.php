@@ -58,14 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($role === 'trainer') {
             header("Location: ./trainer-dashboard");
         } elseif ($role === 'member') {
-            if ($payment === 'pending') {
-                $_SESSION['errors'] = ['Your membership has ended. Please renew to access your dashboard.'];
-                header("Location: ./login");
-                exit;
-            } else {
-                header("Location: ./gear-dashboard");
-                exit;
-            }
+            header("Location: ./gear-dashboard");
+            exit;
         } elseif ($role === 'admin') {
             header("Location: ./dashboard");
         } else {

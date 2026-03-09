@@ -16,6 +16,9 @@
             <span class="nav-icon">🏋️</span>My Workouts
             <span class="nav-badge">3</span>
         </a>
+        <a href="./diet-plan" class="nav-item" onclick="setActive(this)">
+            <span class="nav-icon">🏋️</span>Diet Plan
+        </a>
     </nav>
     <?php
     $name = $auth->show_name();
