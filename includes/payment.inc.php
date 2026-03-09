@@ -32,6 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $get_amount = $data[0]['amount'];
     $get_month = $data[0]['month'];
     $get_year = $data[0]['year'];
+    $new_month = $get_month + 1;
+    $new_year = $get_year;
+    if ($new_month > 12) {
+        $new_month = 1;
+        $new_year = $get_year + 1;
+    }
     $insert_history = [
         'payment_id' => $get_id,
         'member_id' => $member_id,
@@ -39,8 +45,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         'month' => $get_month,
         'year' => $get_year
     ];
-    $result = $controller->update('payment', ['payment_status' => $fee_status], 'member_id', $member_id);
-    $result1 = $controller->insert_record('history', $insert_history);    
+    $result = $controller->update(
+        'payment',
+        [
+            'payment_status' => $fee_status,
+            'month' => $new_month,
+            'year' => $new_year
+        ],
+        'member_id',
+        $member_id
+    );
+    $result1 = $controller->insert_record('history', $insert_history);
     // echo "<pre>";
     // print_r($result);
     // echo "</pre>";
