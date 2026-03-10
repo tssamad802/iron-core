@@ -40,6 +40,29 @@ if (!empty($records)) {
     $weekly_goal = 0;
     $status_text = 'No plan assigned';
 }
+$calories_burned = $controller->fetch_records('diet');
+$total_calories = 0;
+$goal_calories = 0;
+foreach ($calories_burned as $diet) {
+    $total_calories += (int) $diet['calories'];
+    $goal_calories += isset($diet['goal_calories']) ? (int) $diet['goal_calories'] : 0;
+}
+$difference = $goal_calories ? $total_calories - $goal_calories : 0;
+$difference_text = $difference > 0 ? "↑ $difference above goal" : ($difference < 0 ? "↓ " . abs($difference) . " below goal" : "On target");
+$records = $controller->fetch_records('attendance', ['*'], '', ['member_id' => $get_id]);
+$dates = array_map(fn($r) => $r['created_at'], $records);
+rsort($dates);
+$streak = 0;
+$today = new DateTime();
+foreach ($dates as $date_str) {
+    $date = new DateTime($date_str);
+    $diff = $today->diff($date)->days;
+    if ($diff === $streak) {
+        $streak++;
+    } else {
+        break;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -130,8 +153,8 @@ if (!empty($records)) {
                         <div class="stat-lbl">Calories Burned</div>
                         <div class="stat-icon">🔥</div>
                     </div>
-                    <div class="stat-val">2,840</div>
-                    <div class="stat-pill pill-up">↑ 340 above goal</div>
+                    <div class="stat-val"><?= number_format($total_calories) ?></div>
+                    <div class="stat-pill pill-up"><?= $difference_text ?></div>
                 </div>
 
                 <div class="stat-card blue anim-fade-up anim-d3">
@@ -139,21 +162,11 @@ if (!empty($records)) {
                         <div class="stat-lbl">Current Streak</div>
                         <div class="stat-icon">⚡</div>
                     </div>
-                    <div class="stat-val">14<span
+                    <div class="stat-val"><?= $streak ?><span
+                            style="font-family:'Rajdhani',sans-serif;font-size:22px;color:var(--text-sec);letter-spacing:1px;">d</span><span
                             style="font-family:'Rajdhani',sans-serif;font-size:22px;color:var(--text-sec);letter-spacing:1px;">d</span>
                     </div>
                     <div class="stat-pill pill-neutral">→ Keep it going!</div>
-                </div>
-
-                <div class="stat-card yellow anim-fade-up anim-d4">
-                    <div class="stat-top">
-                        <div class="stat-lbl">Total Volume</div>
-                        <div class="stat-icon">💪</div>
-                    </div>
-                    <div class="stat-val">18.4<span
-                            style="font-family:'Rajdhani',sans-serif;font-size:22px;color:var(--text-sec);letter-spacing:1px;">T</span>
-                    </div>
-                    <div class="stat-pill pill-up">↑ PR this month</div>
                 </div>
             </div>
         </div><!-- /page-area -->
