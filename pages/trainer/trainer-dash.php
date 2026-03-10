@@ -10,10 +10,28 @@ $db = new database();
 $conn = $db->connection();
 $controller = new controller($conn);
 $total_clients = $controller->count('users', ['users.trainer_id' => $user_id]);
-// echo "<pre>";
-// print_r($total_clients);
-// echo "</pre>";
-// exit;
+$today_session = $controller->fetch_records('plan');
+$today = date('D');
+$today_count = 0;
+$next_session_time = null;
+foreach ($today_session as $plan) {
+    $plan_days = explode(',', $plan['days']);
+    if (in_array($today, $plan_days) && $plan['plan_status'] == 1) {
+        $today_count++;
+        $plan_time = strtotime($plan['created_at']);
+        if (!$next_session_time || $plan_time < $next_session_time) {
+            $next_session_time = $plan_time;
+        }
+    }
+}
+$next_session_display = $next_session_time ? date('h:i A', $next_session_time) : 'N/A';
+$total_hours = 0;
+$target_hours = 200;
+foreach ($today_session as $plan) {
+    if ($plan['plan_status'] == 1) {
+        $total_hours += $plan['duration'];
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +47,7 @@ $total_clients = $controller->count('users', ['users.trainer_id' => $user_id]);
 
 <body class="dashboard-body">
 
-   <?php require_once 'trainer-sidebar.php'; ?>
+    <?php require_once 'trainer-sidebar.php'; ?>
 
     <div class="dashboard-container">
         <main class="main-wrap">
@@ -70,8 +88,8 @@ $total_clients = $controller->count('users', ['users.trainer_id' => $user_id]);
                             <div class="card-title">Today's Sessions</div>
                             <i class="fas fa-calendar-check text-blue"></i>
                         </div>
-                        <div class="stat-value font-display">08</div>
-                        <div class="stat-change text-dim">Next: 04:00 PM</div>
+                        <div class="stat-value font-display"><?php echo $today_count; ?></div>
+                        <div class="stat-change text-dim">Next: <?php echo $next_session_display; ?></div>
                     </div>
 
                     <div class="card stat-card">
@@ -79,15 +97,15 @@ $total_clients = $controller->count('users', ['users.trainer_id' => $user_id]);
                             <div class="card-title">Hours Tracked</div>
                             <i class="fas fa-clock text-yellow"></i>
                         </div>
-                        <div class="stat-value font-display">156</div>
-                        <div class="stat-change text-sec">Target: 200h</div>
+                        <div class="stat-value font-display"><?php echo $total_hours; ?></div>
+                        <div class="stat-change text-sec">Target: <?php echo $target_hours; ?>h</div>
                     </div>
                 </div>
 
             </div>
         </main>
     </div>
-        <!-- Toast -->
+    <!-- Toast -->
     <div class="toast" id="toast" style="display:none;">
         <span class="toast-icon" id="toastIcon">⚡</span>
         <div>
