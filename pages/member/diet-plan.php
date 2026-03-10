@@ -59,6 +59,16 @@ $fetching_diet = $controller->fetch_records('diet', ['*'], '', ['member_id' => $
                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
                     <span>Logout</span>
                 </button>
+                <div class="attendance-btn-wrapper anim-fade-up anim-d5">
+                    <?php if ($controller->showAttendanceButton($get_id)): ?>
+                        <a href="./attendance-script?id=<?= $get_id ?>">
+                            <button class="attendance-btn">
+                                <i class="fa-solid fa-calendar-check"></i>
+                                Attendance
+                            </button>
+                        </a>
+                    <?php endif; ?>
+                </div>
             </div>
         </header>
 

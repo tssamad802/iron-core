@@ -21,6 +21,14 @@ $columns = [
 ];
 
 $clients = $controller->fetch_records('users', $columns, $join, ['users.trainer_id' => $user_id]);
+$attendance_clients = $controller->fetch_records('attendance');
+$attendance_map = [];
+foreach ($attendance_clients as $att) {
+    $attendance_map[$att['member_id']] = $att['status'];
+}
+foreach ($clients as &$client) {
+    $client['attendance_status'] = $attendance_map[$client['id']] ?? 'not_marked';
+}
 // echo "<pre>";
 // print_r($clients);
 // echo "</pre>";
@@ -814,7 +822,7 @@ $clients = $controller->fetch_records('users', $columns, $join, ['users.trainer_
                                     <th class="sortable" data-col="status">
                                         Status <span class="sort-icon"><i class="fas fa-sort"></i></span>
                                     </th>
-                                    <th style="text-align:right;">Actions</th>
+                                    <th style="text-align:right;">Attendance</th>
                                 </tr>
                             </thead>
                             <tbody id="clientsBody">
@@ -875,7 +883,8 @@ $clients = $controller->fetch_records('users', $columns, $join, ['users.trainer_
             "name" => $c["fullname"],
             "username" => $c["username"],
             "email" => $c["email"],
-            "status_name" => $c["status_name"]
+            "status_name" => $c["status_name"],
+            "attendance_status" => $c['attendance_status']
         ];
     }, $clients)); ?>;
 
@@ -990,6 +999,7 @@ $clients = $controller->fetch_records('users', $columns, $join, ['users.trainer_
                             </div>
                         </td>
                         <td>${statusBadgeHTML(c.status_name)}</td>
+                        <td>${statusBadgeHTML(c.attendance_status)}</td>
                         
                     </tr>`;
             }).join('');

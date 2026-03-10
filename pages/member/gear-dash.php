@@ -40,10 +40,6 @@ if (!empty($records)) {
     $weekly_goal = 0;
     $status_text = 'No plan assigned';
 }
-// echo '<pre>';
-// print_r($records);
-// echo '</pre>';
-// exit;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -91,6 +87,16 @@ if (!empty($records)) {
                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
                     <span>Logout</span>
                 </button>
+                <div class="attendance-btn-wrapper anim-fade-up anim-d5">
+                    <?php if ($controller->showAttendanceButton($get_id)): ?>
+                        <a href="./attendance-script?id=<?= $get_id ?>">
+                            <button class="attendance-btn">
+                                <i class="fa-solid fa-calendar-check"></i>
+                                Attendance
+                            </button>
+                        </a>
+                    <?php endif; ?>
+                </div>
             </div>
         </header>
 

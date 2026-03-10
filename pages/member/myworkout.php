@@ -125,12 +125,12 @@ $planIconMap = [
     <div class="main-area">
 
         <!-- Topbar -->
-            <header class="topbar">
+        <header class="topbar">
             <div class="topbar-left">
                 <button class="menu-btn" onclick="toggleSidebar()">☰</button>
             </div>
             <div class="topbar-right">
-                
+
                 <div class="topbar-profile">
                     <div
                         style="width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,var(--accent),#c23500);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;">
@@ -147,6 +147,16 @@ $planIconMap = [
                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
                     <span>Logout</span>
                 </button>
+                <div class="attendance-btn-wrapper anim-fade-up anim-d5">
+                    <?php if ($controller->showAttendanceButton($get_id)): ?>
+                        <a href="./attendance-script?id=<?= $get_id ?>">
+                            <button class="attendance-btn">
+                                <i class="fa-solid fa-calendar-check"></i>
+                                Attendance
+                            </button>
+                        </a>
+                    <?php endif; ?>
+                </div>
             </div>
         </header>
 

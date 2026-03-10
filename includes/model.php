@@ -174,7 +174,7 @@ class model
         $stmt->bind_param($types, ...$values);
 
         return $stmt->execute();
-         //return $values;
+        //return $values;
     }
 
     public function delete($table, $where_column = 'id', $where_value = null)
@@ -190,5 +190,35 @@ class model
         return $stmt->execute();
     }
 
+    public function markAttendance($member_id)
+    {
+        $today = date('Y-m-d');
+        $existing = $this->fetch_records('attendance', ['*'], '', [
+            'member_id' => $member_id,
+            'DATE(created_at)' => date('Y-m-d')
+        ]);
+
+        if (empty($existing)) {
+            $this->insert_record('attendance', [
+                'member_id' => $member_id,
+                'status' => 'mark',
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
+        }
+
+        header("Location: " . $_SERVER['HTTP_REFERER']);
+        exit();
+    }
+
+    public function showAttendanceButton($member_id)
+    {
+        $today = date('Y-m-d');
+        $existing = $this->fetch_records('attendance', ['*'], '', [
+            'member_id' => $member_id,
+            'DATE(created_at)' => $today
+        ]);
+        return empty($existing);
+    }
 }
+
 ?>

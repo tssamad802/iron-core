@@ -19,7 +19,7 @@ trait PaymentTrait
 
         foreach ($payments as $pay) {
             $monthEnd = date('Y-m-t', strtotime('20' . $pay['year'] . '-' . $pay['month'] . '-01'));
-             if ($monthEnd < $today && strtolower($pay['payment_status']) !== 'received') {
+            if ($monthEnd < $today && strtolower($pay['payment_status']) !== 'received') {
                 $this->update(
                     'payment',
                     ['payment_status' => 'pending'],
@@ -31,11 +31,11 @@ trait PaymentTrait
     }
 }
 
+
 class controller extends model
 {
-    use logout_trait;   
+    use logout_trait;
     use PaymentTrait;
-
     public function is_empty_inputs($fields = [])
     {
         foreach ($fields as $field) {
