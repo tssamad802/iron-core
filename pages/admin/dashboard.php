@@ -69,6 +69,36 @@ $recordsThisMonth = $controller->fetch_records(
     '',
     ['role' => 2]
 );
+$new_registrations = $controller->fetch_records('users', ['*']);
+$today = new DateTime();
+$current_week = (int)$today->format("W");
+$current_year = (int)$today->format("Y");
+$current_week_count = 0;
+$last_week_count = 0;
+foreach ($new_registrations as $user) {
+    if ($user['role'] == 2) { 
+        $created = new DateTime($user['created_at']);
+        $week = (int)$created->format("W");
+        $year = (int)$created->format("Y");
+
+        if ($year === $current_year) {
+            if ($week === $current_week) {
+                $current_week_count++;
+            } elseif ($week === $current_week - 1) {
+                $last_week_count++;
+            }
+        }
+    }
+}
+if ($last_week_count == 0 && $current_week_count > 0) {
+    $change = 100; 
+} elseif ($last_week_count == 0 && $current_week_count == 0) {
+    $change = 0;
+} else {
+    $change = (($current_week_count - $last_week_count) / $last_week_count) * 100;
+}
+$arrow = $change >= 0 ? "↑" : "↓";
+$change_display = abs(round($change, 1));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -174,8 +204,8 @@ $recordsThisMonth = $controller->fetch_records(
                         <div class="stat-icon"><i class="fa-solid fa-user-plus"></i>
                         </div>
                     </div>
-                    <div class="stat-val">134</div>
-                    <div class="stat-pill pill-down">↓ 3.2% this week</div>
+                    <div class="stat-val"><?php echo $current_week_count; ?></div>
+                    <div class="stat-pill pill-down"><?php echo "$arrow $change_display% this week"; ?></div>
                 </div>
             </div>
 
