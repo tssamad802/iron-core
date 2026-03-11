@@ -10,7 +10,7 @@ $db = new database();
 $conn = $db->connection();
 $controller = new controller($conn);
 $total_clients = $controller->count('users', ['users.trainer_id' => $user_id]);
-$today_session = $controller->fetch_records('plan');
+$today_session = $controller->fetch_records('plan', ['*'], '', ['trainer_id' => $user_id]);
 $today = date('D');
 $today_count = 0;
 $next_session_time = null;
