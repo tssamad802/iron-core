@@ -28,7 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     // exit;
 
     $result = $controller->update('users', ['trainer_id' => $trainer], 'id', $user_id);
-    if ($result) {
+    $result1 = $controller->delete('plan_clients', 'client_id', $user_id);
+    if ($result && $result1) {
         echo "<script>
         alert('Success!');
         window.location.href = './admin-members-management';
