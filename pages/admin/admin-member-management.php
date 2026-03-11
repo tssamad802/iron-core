@@ -151,10 +151,10 @@ foreach ($members as &$member) {
                     </select>
                     <select class="filter-select">
                         <option value="">All Trainers</option>
-                        <option>Bilal Hussain</option>
-                        <option>Zain Malik</option>
-                        <option>Nadia Akhtar</option>
-                        <option value="none">Unassigned</option>
+                        <?php
+                        foreach ($trainers as $row) { ?>
+                        <option><?php $row['fullname'] ?></option>
+                        <?php } ?>
                     </select>
                 </div>
 
