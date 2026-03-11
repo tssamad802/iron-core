@@ -162,7 +162,11 @@ $planIconMap = [
 
         <!-- ══ CONTENT ══ -->
         <div class="content-body">
-
+            <?php if ($controller->isPaymentPending($member_id)) { ?>
+                <div class="payment-alert">
+                    ⚠ Payment Pending - Please clear your dues
+                </div>
+            <?php } ?>
             <!-- Page Header -->
             <div class="page-header anim-fade-up">
                 <div class="page-title-block">

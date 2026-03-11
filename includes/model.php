@@ -219,6 +219,37 @@ class model
         ]);
         return empty($existing);
     }
+
+    public function markPendingPayments()
+    {
+        $today = date('Y-m-d');
+        $payments = $this->conn->query("SELECT * FROM payment")->fetch_all(MYSQLI_ASSOC);
+
+        foreach ($payments as $pay) {
+            $monthEnd = date('Y-m-t', strtotime('20' . $pay['year'] . '-' . $pay['month'] . '-01'));
+            if ($monthEnd < $today && strtolower($pay['payment_status']) !== 'received') {
+                $this->update(
+                    'payment',
+                    ['payment_status' => 'pending'],
+                    'id',
+                    $pay['id']
+                );
+            }
+        }
+    }
+
+    public function isPaymentPending($member_id)
+    {
+        $result = $this->conn->query("SELECT payment_status FROM payment WHERE member_id = '$member_id' ORDER BY id DESC LIMIT 1");
+
+        if ($row = $result->fetch_assoc()) {
+            if (strtolower($row['payment_status']) == 'pending') {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
 
 ?>

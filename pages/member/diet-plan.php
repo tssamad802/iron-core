@@ -73,7 +73,11 @@ $fetching_diet = $controller->fetch_records('diet', ['*'], '', ['member_id' => $
         </header>
 
         <div class="page-area">
-
+            <?php if ($controller->isPaymentPending($member_id)) { ?>
+                <div class="payment-alert">
+                    ⚠ Payment Pending - Please clear your dues
+                </div>
+            <?php } ?>
             <div class="page-header anim-fade-up">
                 <div class="page-title-block">
                     <div class="title">Diet Plan</div>

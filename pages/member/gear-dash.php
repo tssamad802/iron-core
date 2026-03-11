@@ -124,6 +124,11 @@ foreach ($dates as $date_str) {
         </header>
 
         <div class="page-area">
+            <?php if ($controller->isPaymentPending($get_id)) { ?>
+                <div class="payment-alert">
+                    ⚠ Payment Pending - Please clear your dues
+                </div>
+            <?php } ?>
 
             <!-- Page Header -->
             <div class="page-header anim-fade-up">

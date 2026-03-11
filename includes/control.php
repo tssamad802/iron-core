@@ -10,32 +10,10 @@ trait logout_trait
     }
 }
 
-trait PaymentTrait
-{
-    public function markPendingPayments()
-    {
-        $today = date('Y-m-d');
-        $payments = $this->conn->query("SELECT * FROM payment")->fetch_all(MYSQLI_ASSOC);
-
-        foreach ($payments as $pay) {
-            $monthEnd = date('Y-m-t', strtotime('20' . $pay['year'] . '-' . $pay['month'] . '-01'));
-            if ($monthEnd < $today && strtolower($pay['payment_status']) !== 'received') {
-                $this->update(
-                    'payment',
-                    ['payment_status' => 'pending'],
-                    'id',
-                    $pay['id']
-                );
-            }
-        }
-    }
-}
-
 
 class controller extends model
 {
     use logout_trait;
-    use PaymentTrait;
     public function is_empty_inputs($fields = [])
     {
         foreach ($fields as $field) {
