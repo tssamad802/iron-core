@@ -40,12 +40,12 @@ if (!empty($records)) {
     $weekly_goal = 0;
     $status_text = 'No plan assigned';
 }
-$calories_burned = $controller->fetch_records('diet');
+$calories_burned = $controller->fetch_records('diet', ['*'], '', ['member_id' => $get_id]);
 $total_calories = 0;
 $goal_calories = 0;
 foreach ($calories_burned as $diet) {
     $total_calories += (int) $diet['calories'];
-    $goal_calories += isset($diet['goal_calories']) ? (int) $diet['goal_calories'] : 0;
+    $goal_calories += isset($diet['calories']) ? (int) $diet['calories'] : 0;
 }
 $difference = $goal_calories ? $total_calories - $goal_calories : 0;
 $difference_text = $difference > 0 ? "↑ $difference above goal" : ($difference < 0 ? "↓ " . abs($difference) . " below goal" : "On target");
