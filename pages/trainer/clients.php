@@ -9,6 +9,7 @@ $user_id = $auth->get_id();
 $db = new database();
 $conn = $db->connection();
 $controller = new controller($conn);
+$controller->resetDailyAttendance();
 $join = "
 INNER JOIN role ON users.role = role.id
 INNER JOIN status ON users.status = status.id

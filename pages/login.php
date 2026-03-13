@@ -8,6 +8,7 @@ $db = new database();
 $conn = $db->connection();
 $controller = new controller($conn);
 $controller->markPendingPayments();
+$controller->resetDailyAttendance();
 $view = new view();
 $total_members = $controller->count('users', ['role' => 2]);
 $total_trainers = $controller->count('users', ['role' => 3]);

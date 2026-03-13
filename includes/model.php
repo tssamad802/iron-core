@@ -195,7 +195,7 @@ class model
         $today = date('Y-m-d');
         $existing = $this->fetch_records('attendance', ['*'], '', [
             'member_id' => $member_id,
-            'DATE(created_at)' => date('Y-m-d')
+            'DATE(created_at)' => $today
         ]);
 
         if (empty($existing)) {
@@ -218,6 +218,15 @@ class model
             'DATE(created_at)' => $today
         ]);
         return empty($existing);
+    }
+
+    function resetDailyAttendance()
+    {
+        $today = date('Y-m-d');
+        $query = "UPDATE attendance SET status = 'not_marked' WHERE DATE(created_at) != ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param('s', $today);
+        return $stmt->execute();
     }
 
     public function markPendingPayments()
