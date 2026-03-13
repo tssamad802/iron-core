@@ -10,6 +10,17 @@ $db = new database();
 $conn = $db->connection();
 $controller = new controller($conn);
 $total_clients = $controller->count('users', ['users.trainer_id' => $user_id]);
+$total_clients1 = $controller->fetch_records('users', ['*'], '', ['trainer_id' => $user_id]);
+$new_this_month = 0;
+$current_month = date('m');
+$current_year = date('Y');
+foreach ($total_clients1 as $client) {
+    $created_month = date('m', strtotime($client['created_at']));
+    $created_year = date('Y', strtotime($client['created_at']));
+    if ($created_month == $current_month && $created_year == $current_year) {
+        $new_this_month++;
+    }
+}
 $today_session = $controller->fetch_records('plan', ['*'], '', ['trainer_id' => $user_id]);
 $today = date('D');
 $today_count = 0;
@@ -80,7 +91,9 @@ foreach ($today_session as $plan) {
                             <i class="fas fa-users text-accent"></i>
                         </div>
                         <div class="stat-value font-display"><?php echo $total_clients; ?></div>
-                        <div class="stat-change text-green"><i class="fas fa-caret-up"></i> +4 this month</div>
+                        <div class="stat-change text-green">
+                            <i class="fas fa-caret-up"></i> +<?php echo $new_this_month; ?> this month
+                        </div>
                     </div>
 
                     <div class="card stat-card">
