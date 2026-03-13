@@ -47,7 +47,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     // print_r($result);
     // exit;
     if ($result) {
-        header("Location: ./admin-users");
+        echo '<script>
+        alert("success");
+        window.location.href = "./admin-users";
+      </script>';
         exit;
     } else {
         header("Location: ./admin-edit-users?id=$id");
