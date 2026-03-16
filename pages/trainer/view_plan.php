@@ -165,9 +165,6 @@ $plan_clients_dropdown = $controller->fetch_records('users', $columns1, $join1, 
                             </div>
 
                             <div class="plan-hero-actions">
-                                <button class="btn btn-ghost" onclick="openEditModal()">
-                                    <i class="fas fa-edit"></i> Edit
-                                </button>
                                 <a class="btn btn-primary" onclick="openAssignModal1();" style="gap:7px;">
                                     <i class="fas fa-users"></i> Assign Clients
                                 </a>
@@ -524,8 +521,9 @@ $plan_clients_dropdown = $controller->fetch_records('users', $columns1, $join1, 
                 <?php $view->showErrors(); ?>
             </div>
         </div>
-
     </form>
+
+
     <?php if ($hasErrors): ?>
         <script>
             document.addEventListener("DOMContentLoaded", function () {
