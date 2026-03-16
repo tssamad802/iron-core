@@ -35,6 +35,8 @@ $router
     ->add('/delete_diet', 'includes/delete_diet.php')
     ->add('/member-plans', 'pages/trainer/member-plans.php')
     ->add('/attendance-script', 'includes/attendance.inc.php')
+    ->add('/delete-exercise', 'includes/delete_exercise.inc.php')
+    ->add('/remove-plan-client', 'includes/remove_plan_client.inc.php')
     ->add('/payment-script', './includes/payment.inc.php');
 
 $router->dispatch();

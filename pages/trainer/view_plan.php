@@ -51,10 +51,6 @@ if ($plan) {
 }
 $clients = $controller->fetch_records('users', $columns, $join, ['plan_clients.plan_id' => $plan_id]);
 $plan_clients_dropdown = $controller->fetch_records('users', $columns1, $join1, ['users.trainer_id' => $user_id]);
-// echo "<pre>";
-// print_r($plan_clients_dropdown);
-// echo "</pre>";
-// exit;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -241,6 +237,7 @@ $plan_clients_dropdown = $controller->fetch_records('users', $columns1, $join1, 
                                                     <th class="col-sets">Sets</th>
                                                     <th class="col-reps">Reps</th>
                                                     <th class="col-rest">Rest</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody id="exercises-tbody">
@@ -288,6 +285,13 @@ $plan_clients_dropdown = $controller->fetch_records('users', $columns1, $join1, 
                                                                 <?= htmlspecialchars($ex['rest']) ?>s
                                                             </span>
                                                         </td>
+                                                        <td>
+                                                            <a href="./delete-exercise?exercise_id=<?= $ex['id'] ?>&plan_id=<?= $plan_id ?>"
+                                                                class="action-btn remove"
+                                                                onclick="return confirm('Delete this exercise?')">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
@@ -329,6 +333,7 @@ $plan_clients_dropdown = $controller->fetch_records('users', $columns1, $join1, 
                                                     <th>Client</th>
                                                     <th class="col-email">Email</th>
                                                     <th class="col-status">Status</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody id="clients-tbody">
@@ -371,6 +376,13 @@ $plan_clients_dropdown = $controller->fetch_records('users', $columns1, $join1, 
                                                         <td class="col-status">
                                                             <span class="client-online-dot">
                                                                 <?= htmlspecialchars($client['status_name'] ?? '—') ?></span>
+                                                        </td>
+                                                        <td>
+                                                            <a href="./remove-plan-client?client_id=<?= $client['id'] ?>&plan_id=<?= $plan_id ?>"
+                                                                class="action-btn remove"
+                                                                onclick="return confirm('Remove this client from the plan?')">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                 <?php endforeach; ?>
