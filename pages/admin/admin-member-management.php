@@ -502,7 +502,7 @@ foreach ($members as &$member) {
         justify-content: flex-end;
         gap: 10px;
       ">
-                    <button type="button" onclick="closeQuickAssignModal()"
+                    <a type="button" onclick="closeQuickAssignModal()"
                         onmouseover="this.style.borderColor='#ff4500';this.style.color='#f0f2f8';"
                         onmouseout="this.style.borderColor='#242832';this.style.color='#8a90a2';" style="
             padding: 12px 20px;
@@ -515,7 +515,7 @@ foreach ($members as &$member) {
             cursor: pointer;
             transition: all 0.18s;
             font-family: 'DM Sans', sans-serif;
-          ">Cancel</button>
+          ">Cancel</a>
 
                     <button type="submit"
                         onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 32px rgba(255,69,0,0.5)';"
