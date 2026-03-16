@@ -42,10 +42,10 @@ $fetching_members = $controller->fetch_records(
 );
 $total = $controller->count('users');
 $roles = $controller->fetch_records('role');
-    // echo '<pre>';
-    // print_r($fetching_members);
-    // echo '</pre>';
-    // exit;
+// echo '<pre>';
+// print_r($fetching_members);
+// echo '</pre>';
+// exit;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -97,7 +97,7 @@ $roles = $controller->fetch_records('role');
 
     <!-- MAIN WRAP -->
     <div class="main-wrap">
-    <header class="topbar">
+        <header class="topbar">
             <div class="topbar-left">
                 <button class="menu-btn" onclick="toggleSidebar()">☰</button>
             </div>
@@ -279,6 +279,96 @@ $roles = $controller->fetch_records('role');
             document.getElementById('sidebar').classList.remove('open');
             document.getElementById('overlay').classList.remove('open');
         }
+    </script>
+    <script>
+        (function () {
+            const LIMIT = 5;
+            const filterCard = document.querySelector('.card.anim-fade-up.anim-d1');
+            if (filterCard) {
+                const flexDiv = filterCard.querySelector('.flex-between');
+                const searchWrap = document.createElement('div');
+                searchWrap.className = 'filter-search';
+                searchWrap.style.cssText = 'position:relative;min-width:220px;flex:1;max-width:300px;';
+                searchWrap.innerHTML = `
+      <i class="fa-solid fa-magnifying-glass s-icon" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-dim);font-size:13px;pointer-events:none;"></i>
+      <input id="js_search" type="text" placeholder="Search by name or email…"
+        style="width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:9px 14px 9px 36px;font-size:13px;color:var(--text-prime);outline:none;font-family:'DM Sans',sans-serif;transition:border-color .2s;"
+        autocomplete="off" />`;
+                flexDiv.appendChild(searchWrap);
+                const inp = searchWrap.querySelector('input');
+                inp.addEventListener('focus', () => inp.style.borderColor = 'var(--accent)');
+                inp.addEventListener('blur', () => inp.style.borderColor = 'var(--border)');
+            }
+            const tbody = document.getElementById('members_body');
+            const allRows = Array.from(tbody.querySelectorAll('tr'));
+            let filtered = [...allRows];
+            let currentPage = 1;
+            const paginationEl = document.querySelector('.pagination');
+            function render() {
+                const totalFiltered = filtered.length;
+                const totalPages = Math.max(1, Math.ceil(totalFiltered / LIMIT));
+                if (currentPage > totalPages) currentPage = totalPages;
+                if (currentPage < 1) currentPage = 1;
+
+                const start = (currentPage - 1) * LIMIT;
+                const end = start + LIMIT;
+                allRows.forEach(r => r.style.display = 'none');
+                filtered.slice(start, end).forEach(r => r.style.display = '');
+                buildPagination(totalFiltered, totalPages);
+            }
+            function buildPagination(total, totalPages) {
+                if (!paginationEl) return;
+
+                const start = Math.min((currentPage - 1) * LIMIT + 1, total);
+                const end = Math.min(currentPage * LIMIT, total);
+
+                paginationEl.innerHTML = `
+      <span class="page-info">
+        Showing ${total === 0 ? 0 : start}–${end} of ${total} users
+      </span>
+      <div class="page-btns" id="js_page_btns"></div>`;
+
+                const btnsEl = paginationEl.querySelector('#js_page_btns');
+
+                /* prev */
+                const prev = makeBtn('<i class="fa-solid fa-chevron-left"></i>', currentPage <= 1);
+                if (currentPage > 1) prev.addEventListener('click', () => { currentPage--; render(); });
+                btnsEl.appendChild(prev);
+                for (let i = 1; i <= totalPages; i++) {
+                    const btn = makeBtn(i, false, i === currentPage);
+                    btn.addEventListener('click', () => { currentPage = i; render(); });
+                    btnsEl.appendChild(btn);
+                }
+                const next = makeBtn('<i class="fa-solid fa-chevron-right"></i>', currentPage >= totalPages);
+                if (currentPage < totalPages) next.addEventListener('click', () => { currentPage++; render(); });
+                btnsEl.appendChild(next);
+            }
+
+            function makeBtn(html, disabled, active = false) {
+                const btn = document.createElement('button');
+                btn.className = 'page-btn' + (active ? ' active' : '');
+                btn.innerHTML = html;
+                if (disabled) btn.disabled = true;
+                return btn;
+            }
+            function onSearch(e) {
+                const q = e.target.value.trim().toLowerCase();
+                filtered = q
+                    ? allRows.filter(row => row.textContent.toLowerCase().includes(q))
+                    : [...allRows];
+                currentPage = 1;
+                render();
+            }
+
+            /* ── WIRE UP ── */
+            document.getElementById('js_search')?.addEventListener('input', onSearch);
+
+            /* initial render (respects whatever page PHP loaded) */
+            /* Because PHP already rendered the correct slice, we need to
+               treat the visible rows as page 1 of "all rows" for JS.
+               We re-render so our pagination controls are JS-driven. */
+            render();
+        })();
     </script>
     <script src="./js/script.js"></script>
     <script src="./js/server.js"></script>
