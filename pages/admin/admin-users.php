@@ -282,92 +282,158 @@ $roles = $controller->fetch_records('role');
     </script>
     <script>
         (function () {
+            /* ══════════════════════════════════════
+               ALL ROWS DATA — injected from PHP
+               (read-only, no backend logic changed)
+            ══════════════════════════════════════ */
+            const ALL_USERS = <?php
+            // Re-fetch ALL users without limit for JS dataset
+            $all_members = $controller->fetch_records('users', $columns, $join, [], 999999, 0);
+            $js_data = [];
+            foreach ($all_members as $r) {
+                $name = $r['fullname'];
+                $words = explode(' ', trim($name));
+                $inits = strtoupper(substr($words[0], 0, 1));
+                if (count($words) > 1)
+                    $inits .= strtoupper(substr($words[1], 0, 1));
+
+                $showNotify = (
+                    strtolower($r['role_name']) !== 'admin' &&
+                    strtolower($r['role_name']) !== 'trainer' &&
+                    strtolower($r['payment_status']) === 'pending'
+                );
+
+                $js_data[] = [
+                    'initials' => $inits,
+                    'username' => htmlspecialchars($r['username'], ENT_QUOTES),
+                    'email' => htmlspecialchars($r['email'], ENT_QUOTES),
+                    'status_name' => htmlspecialchars($r['status_name'], ENT_QUOTES),
+                    'created_at' => date('Y-m-d', strtotime($r['created_at'])),
+                    'edit_url' => './admin-edit-users?id=' . (int) $r['id'],
+                    'delete_url' => './delete-record?id=' . (int) $r['id'],
+                    'show_notify' => $showNotify,
+                ];
+            }
+            echo json_encode($js_data, JSON_HEX_TAG | JSON_HEX_QUOT);
+            ?>;
+
             const LIMIT = 5;
+            let filtered = [...ALL_USERS];
+            let currentPage = 1;
+
+            const tbody = document.getElementById('members_body');
+            const paginationEl = document.querySelector('.pagination');
+
+            /* ── INJECT SEARCH INPUT ── */
             const filterCard = document.querySelector('.card.anim-fade-up.anim-d1');
             if (filterCard) {
                 const flexDiv = filterCard.querySelector('.flex-between');
-                const searchWrap = document.createElement('div');
-                searchWrap.className = 'filter-search';
-                searchWrap.style.cssText = 'position:relative;min-width:220px;flex:1;max-width:300px;';
-                searchWrap.innerHTML = `
-      <i class="fa-solid fa-magnifying-glass s-icon" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-dim);font-size:13px;pointer-events:none;"></i>
+                const wrap = document.createElement('div');
+                wrap.style.cssText = 'position:relative;min-width:220px;flex:1;max-width:300px;';
+                wrap.innerHTML = `
+      <i class="fa-solid fa-magnifying-glass"
+         style="position:absolute;left:12px;top:50%;transform:translateY(-50%);
+                color:var(--text-dim);font-size:13px;pointer-events:none;z-index:1;"></i>
       <input id="js_search" type="text" placeholder="Search by name or email…"
-        style="width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:9px 14px 9px 36px;font-size:13px;color:var(--text-prime);outline:none;font-family:'DM Sans',sans-serif;transition:border-color .2s;"
-        autocomplete="off" />`;
-                flexDiv.appendChild(searchWrap);
-                const inp = searchWrap.querySelector('input');
+        style="width:100%;background:var(--bg-card);border:1px solid var(--border);
+               border-radius:var(--radius-md);padding:9px 14px 9px 36px;font-size:13px;
+               color:var(--text-prime);outline:none;font-family:'DM Sans',sans-serif;
+               transition:border-color .2s;" autocomplete="off" />`;
+                flexDiv.appendChild(wrap);
+                const inp = wrap.querySelector('input');
                 inp.addEventListener('focus', () => inp.style.borderColor = 'var(--accent)');
                 inp.addEventListener('blur', () => inp.style.borderColor = 'var(--border)');
+                inp.addEventListener('input', onSearch);
             }
-            const tbody = document.getElementById('members_body');
-            const allRows = Array.from(tbody.querySelectorAll('tr'));
-            let filtered = [...allRows];
-            let currentPage = 1;
-            const paginationEl = document.querySelector('.pagination');
-            function render() {
-                const totalFiltered = filtered.length;
-                const totalPages = Math.max(1, Math.ceil(totalFiltered / LIMIT));
-                if (currentPage > totalPages) currentPage = totalPages;
-                if (currentPage < 1) currentPage = 1;
 
+            /* ── RENDER ROWS ── */
+            function renderRows() {
                 const start = (currentPage - 1) * LIMIT;
-                const end = start + LIMIT;
-                allRows.forEach(r => r.style.display = 'none');
-                filtered.slice(start, end).forEach(r => r.style.display = '');
-                buildPagination(totalFiltered, totalPages);
-            }
-            function buildPagination(total, totalPages) {
-                if (!paginationEl) return;
+                const slice = filtered.slice(start, start + LIMIT);
 
-                const start = Math.min((currentPage - 1) * LIMIT + 1, total);
+                tbody.innerHTML = slice.map(u => `
+      <tr>
+        <td>
+          <div class="member-cell">
+            <div class="avatar avatar-sm">${u.initials}</div>
+            <div>
+              <div class="member-name">${u.username}</div>
+              <div class="member-email">${u.email}</div>
+            </div>
+          </div>
+        </td>
+        <td><span class="badge badge-active">${u.status_name}</span></td>
+        <td>${u.created_at}</td>
+        <td style="text-align:right;">
+          <a href="${u.edit_url}"   class="table-link">Edit</a>
+          <a href="${u.delete_url}" class="table-link">Delete</a>
+          ${u.show_notify
+                        ? `<button class="fee-notify-btn"><i class="fa-solid fa-bell"></i> Notify</button>`
+                        : ''}
+        </td>
+      </tr>`).join('');
+            }
+
+            /* ── RENDER PAGINATION ── */
+            function renderPagination() {
+                if (!paginationEl) return;
+                const total = filtered.length;
+                const totalPages = Math.max(1, Math.ceil(total / LIMIT));
+                const start = total === 0 ? 0 : (currentPage - 1) * LIMIT + 1;
                 const end = Math.min(currentPage * LIMIT, total);
 
                 paginationEl.innerHTML = `
-      <span class="page-info">
-        Showing ${total === 0 ? 0 : start}–${end} of ${total} users
-      </span>
-      <div class="page-btns" id="js_page_btns"></div>`;
+      <span class="page-info">Showing ${start}–${end} of ${total} users</span>
+      <div class="page-btns" id="js_btns"></div>`;
 
-                const btnsEl = paginationEl.querySelector('#js_page_btns');
+                const btnsEl = paginationEl.querySelector('#js_btns');
 
                 /* prev */
-                const prev = makeBtn('<i class="fa-solid fa-chevron-left"></i>', currentPage <= 1);
-                if (currentPage > 1) prev.addEventListener('click', () => { currentPage--; render(); });
-                btnsEl.appendChild(prev);
+                btnsEl.appendChild(makeBtn('<i class="fa-solid fa-chevron-left"></i>',
+                    currentPage <= 1, false, () => go(currentPage - 1)));
+
+                /* numbered pages */
                 for (let i = 1; i <= totalPages; i++) {
-                    const btn = makeBtn(i, false, i === currentPage);
-                    btn.addEventListener('click', () => { currentPage = i; render(); });
-                    btnsEl.appendChild(btn);
+                    btnsEl.appendChild(makeBtn(i, false, i === currentPage, () => go(i)));
                 }
-                const next = makeBtn('<i class="fa-solid fa-chevron-right"></i>', currentPage >= totalPages);
-                if (currentPage < totalPages) next.addEventListener('click', () => { currentPage++; render(); });
-                btnsEl.appendChild(next);
+
+                /* next */
+                btnsEl.appendChild(makeBtn('<i class="fa-solid fa-chevron-right"></i>',
+                    currentPage >= totalPages, false, () => go(currentPage + 1)));
             }
 
-            function makeBtn(html, disabled, active = false) {
+            function makeBtn(html, disabled, active, onClick) {
                 const btn = document.createElement('button');
                 btn.className = 'page-btn' + (active ? ' active' : '');
                 btn.innerHTML = html;
-                if (disabled) btn.disabled = true;
+                btn.disabled = disabled;
+                if (!disabled && onClick) btn.addEventListener('click', onClick);
                 return btn;
             }
+
+            function go(page) {
+                const totalPages = Math.max(1, Math.ceil(filtered.length / LIMIT));
+                currentPage = Math.min(Math.max(1, page), totalPages);
+                renderRows();
+                renderPagination();
+            }
+
+            /* ── SEARCH ── */
             function onSearch(e) {
                 const q = e.target.value.trim().toLowerCase();
                 filtered = q
-                    ? allRows.filter(row => row.textContent.toLowerCase().includes(q))
-                    : [...allRows];
+                    ? ALL_USERS.filter(u =>
+                        u.username.toLowerCase().includes(q) ||
+                        u.email.toLowerCase().includes(q))
+                    : [...ALL_USERS];
                 currentPage = 1;
-                render();
+                renderRows();
+                renderPagination();
             }
 
-            /* ── WIRE UP ── */
-            document.getElementById('js_search')?.addEventListener('input', onSearch);
+            /* ── BOOT ── */
+            go(1);
 
-            /* initial render (respects whatever page PHP loaded) */
-            /* Because PHP already rendered the correct slice, we need to
-               treat the visible rows as page 1 of "all rows" for JS.
-               We re-render so our pagination controls are JS-driven. */
-            render();
         })();
     </script>
     <script src="./js/script.js"></script>
