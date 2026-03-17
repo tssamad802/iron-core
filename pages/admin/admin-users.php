@@ -363,7 +363,7 @@ $roles = $controller->fetch_records('role');
             </div>
           </div>
         </td>
-        <td><span class="badge badge-active">${u.status_name}</span></td>
+        <td><span class="badge badge-active">${u.status_name}</span></td>   
         <td>${u.created_at}</td>
         <td style="text-align:right;">
           <a href="${u.edit_url}"   class="table-link">Edit</a>
