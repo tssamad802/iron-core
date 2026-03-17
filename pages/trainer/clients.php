@@ -29,7 +29,7 @@ $attendance_map = [];
 foreach ($attendance_clients as $att) {
     $attendance_map[$att['member_id']] = [
         'status' => $att['status'],
-        'time' => $att['attendance_time'] ?? $att['created_at'] 
+        'time' => $att['attendance_time'] ?? $att['created_at']
     ];
 }
 foreach ($clients as &$client) {
@@ -1017,12 +1017,17 @@ foreach ($clients as &$client) {
         renderPagination(currentPage, totalPages);
     }
 
-    function formatTime12h(timeStr) {
-        if (!timeStr) return '';
-        const [h, m, s] = timeStr.split(':');
-        const hour = h % 12 || 12;
-        const ampm = h >= 12 ? 'pm' : 'am';
-        return `${hour}:${m}${ampm}`;
+    function formatTime12h(dateTimeStr) {
+        if (!dateTimeStr) return '';
+        const dateObj = new Date(dateTimeStr);
+        if (isNaN(dateObj)) return '';
+        let hours = dateObj.getHours();
+        const minutes = dateObj.getMinutes();
+        const ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        if (hours === 0) hours = 12;
+        const minStr = minutes < 10 ? '0' + minutes : minutes;
+        return `${hours}:${minStr}${ampm}`;
     }
 
     function renderPagination(cur, total) {
