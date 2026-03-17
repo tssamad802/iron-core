@@ -4,12 +4,15 @@ require_once './includes/dbh.inc.php';
 require_once './includes/middleware.php';
 require_once './includes/model.php';
 require_once './includes/control.php';
+
 $auth = new auth(['trainer']);
 $user_id = $auth->get_id();
+
 $db = new database();
 $conn = $db->connection();
 $controller = new controller($conn);
 $controller->resetDailyAttendance();
+
 $join = "
 INNER JOIN role ON users.role = role.id
 INNER JOIN status ON users.status = status.id
@@ -20,20 +23,19 @@ $columns = [
     'role.role AS role_name',
     'status.status AS status_name'
 ];
-
 $clients = $controller->fetch_records('users', $columns, $join, ['users.trainer_id' => $user_id]);
 $attendance_clients = $controller->fetch_records('attendance');
 $attendance_map = [];
 foreach ($attendance_clients as $att) {
-    $attendance_map[$att['member_id']] = $att['status'];
+    $attendance_map[$att['member_id']] = [
+        'status' => $att['status'],
+        'time' => $att['attendance_time'] ?? $att['created_at'] 
+    ];
 }
 foreach ($clients as &$client) {
-    $client['attendance_status'] = $attendance_map[$client['id']] ?? 'not_marked';
+    $client['attendance_status'] = $attendance_map[$client['id']]['status'] ?? 'not_marked';
+    $client['attendance_time'] = $attendance_map[$client['id']]['time'] ?? null;
 }
-// echo "<pre>";
-// print_r($clients);
-// echo "</pre>";
-// exit;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -886,7 +888,8 @@ foreach ($clients as &$client) {
             "username" => $c["username"],
             "email" => $c["email"],
             "status_name" => $c["status_name"],
-            "attendance_status" => $c['attendance_status']
+            "attendance_status" => $c['attendance_status'],
+            "attendance_time" => $c['attendance_time'] ?? null
         ];
     }, $clients)); ?>;
 
@@ -1001,13 +1004,25 @@ foreach ($clients as &$client) {
                             </div>
                         </td>
                         <td>${statusBadgeHTML(c.status_name)}</td>
-                        <td>${statusBadgeHTML(c.attendance_status)}</td>
+                        <td>
+    ${c.attendance_status === 'not_marked'
+                        ? statusBadgeHTML(c.attendance_status)
+                        : statusBadgeHTML(c.attendance_status) + (c.attendance_time ? ` — ${formatTime12h(c.attendance_time)}` : '')}
+</td>
                         
                     </tr>`;
             }).join('');
         }
 
         renderPagination(currentPage, totalPages);
+    }
+
+    function formatTime12h(timeStr) {
+        if (!timeStr) return '';
+        const [h, m, s] = timeStr.split(':');
+        const hour = h % 12 || 12;
+        const ampm = h >= 12 ? 'pm' : 'am';
+        return `${hour}:${m}${ampm}`;
     }
 
     function renderPagination(cur, total) {
