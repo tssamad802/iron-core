@@ -33,23 +33,7 @@ foreach ($members as &$member) {
     $member['trainer_name'] = $tid ? ($trainer_lookup[$tid] ?? 'N/A') : 'N/A';
     unset($member['trainer_id']);
 }
-$limit = 5;
-$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-
 $total_members = $controller->count('users', ['role' => 2]);
-$total_pages = ceil($total_members / $limit);
-
-$members = $controller->fetch_records('users', $columns, $join, ['users.role' => 2], $limit, $offset);
-$trainers = $controller->fetch_records('users', $columns, $join, ['users.role' => 3]);
-$trainer_lookup = [];
-foreach ($trainers as $trainer)
-    $trainer_lookup[$trainer['id']] = $trainer['fullname'];
-foreach ($members as &$member) {
-    $tid = $member['trainer_id'];
-    $member['trainer_name'] = $tid ? ($trainer_lookup[$tid] ?? 'N/A') : 'N/A';
-    unset($member['trainer_id']);
-}
 // echo '<pre>';
 // print_r($members);
 // echo '</pre>';
@@ -247,26 +231,11 @@ foreach ($members as &$member) {
                 </div>
 
                 <!-- PAGINATION -->
-                <div class="pagination">
+                <div class="pagination" id="pagination">
                     <span class="page-info">
-                        Showing <?php echo ($offset + 1) ?>–<?php echo min($offset + $limit, $total_members) ?> of
-                        <?php echo $total_members ?> members
+                        Showing 1–5 of 20 members
                     </span>
                     <div class="page-btns">
-                        <?php if ($page > 1): ?>
-                            <a href="?page=<?php echo $page - 1 ?>"><button class="page-btn"><i
-                                        class="fa-solid fa-chevron-left"></i></button></a>
-                        <?php endif; ?>
-
-                        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                            <a href="?page=<?php echo $i ?>"><button
-                                    class="page-btn <?php echo $i == $page ? 'active' : '' ?>"><?php echo $i ?></button></a>
-                        <?php endfor; ?>
-
-                        <?php if ($page < $total_pages): ?>
-                            <a href="?page=<?php echo $page + 1 ?>"><button class="page-btn"><i
-                                        class="fa-solid fa-chevron-right"></i></button></a>
-                        <?php endif; ?>
                     </div>
                 </div>
             </div>

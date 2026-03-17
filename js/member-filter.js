@@ -1,10 +1,10 @@
-/* ============================================================
-   Member Management — Search + Filter + Pagination
-   Drop this into script.js or include as a separate file
-   ============================================================ */
-
 (function () {
   "use strict";
+
+  /* ── Configuration ────────────────────────────────────── */
+  const ROWS_PER_PAGE = 5;
+  let currentPage = 1;
+  let filteredRows = []; // To store rows that passed the search/filter
 
   /* ── DOM refs ─────────────────────────────────────────── */
   const filterSearch = document.querySelector(
@@ -18,189 +18,141 @@
   )[1];
   const tbody = document.querySelector(".members-table tbody");
   const pageInfo = document.querySelector(".page-info");
+  const paginationContainer = document.querySelector(".page-btns");
 
-  if (!filterSearch || !filterStatus || !filterTrainer || !tbody) return;
+  if (!filterSearch || !tbody || !paginationContainer) return;
 
-  /* ── Collect all rows (on current page) ──────────────── */
-  function getRows() {
-    return Array.from(tbody.querySelectorAll("tr"));
-  }
+  const allRows = Array.from(tbody.querySelectorAll("tr"));
 
-  /* ── Normalise text for comparison ───────────────────── */
-  function norm(str) {
-    return (str || "").trim().toLowerCase();
-  }
+  /* ── Core Logic ───────────────────────────────────────── */
 
-  /* ── Read cell text helpers ──────────────────────────── */
-  function memberText(row) {
-    const name = row.querySelector(".member-name")?.textContent || "";
-    const email = row.querySelector(".member-email")?.textContent || "";
-    return norm(name + " " + email);
-  }
-
-  function statusText(row) {
-    return norm(row.querySelector(".badge")?.textContent);
-  }
-
-  function trainerText(row) {
-    return norm(row.querySelector(".trainer-assigned")?.textContent);
-  }
-
-  /* ── Core filter function ─────────────────────────────── */
   function applyFilters() {
-    const query = norm(filterSearch.value);
-    const statusVal = norm(filterStatus.value);
-    const trainerVal = norm(filterTrainer.value);
+    const query = filterSearch.value.trim().toLowerCase();
+    const statusVal = filterStatus.value.toLowerCase();
+    const trainerVal = filterTrainer.value.toLowerCase();
 
-    let visible = 0;
-    const rows = getRows();
+    // 1. Filter the rows
+    filteredRows = allRows.filter((row) => {
+      const nameEmail = (
+        row.querySelector(".member-name")?.textContent +
+        " " +
+        row.querySelector(".member-email")?.textContent
+      ).toLowerCase();
+      const status =
+        row.querySelector(".badge")?.textContent.toLowerCase() || "";
+      const trainer =
+        row.querySelector(".trainer-assigned")?.textContent.toLowerCase() || "";
 
-    rows.forEach((row) => {
-      const matchSearch = !query || memberText(row).includes(query);
-      const matchStatus = !statusVal || statusText(row).includes(statusVal);
-      const matchTrainer = matchTrainer_fn(row, trainerVal);
+      const matchSearch = !query || nameEmail.includes(query);
+      const matchStatus = !statusVal || status.includes(statusVal);
 
-      const show = matchSearch && matchStatus && matchTrainer;
-      row.style.display = show ? "" : "none";
-      if (show) visible++;
+      let matchTrainer = true;
+      if (trainerVal) {
+        if (trainerVal === "none" || trainerVal === "unassigned") {
+          matchTrainer =
+            trainer.includes("n/a") || trainer.includes("unassign");
+        } else {
+          matchTrainer = trainer.includes(trainerVal);
+        }
+      }
+
+      return matchSearch && matchStatus && matchTrainer;
     });
 
-    updatePageInfo(visible, rows.length);
-    updatePaginationVisibility(visible < rows.length);
+    currentPage = 1; // Reset to page 1 on every new filter
+    renderTable();
   }
 
-  /* ── Trainer matching (handles "unassigned" / "none") ── */
-  function matchTrainer_fn(row, trainerVal) {
-    if (!trainerVal) return true; // "All Trainers"
+  function renderTable() {
+    const totalItems = filteredRows.length;
+    const totalPages = Math.ceil(totalItems / ROWS_PER_PAGE);
 
-    const txt = trainerText(row);
+    // 1. Hide all rows first
+    allRows.forEach((row) => (row.style.display = "none"));
 
-    if (trainerVal === "none" || trainerVal === "unassigned") {
-      return txt.includes("n/a") || txt.includes("unassign");
+    // 2. Calculate slice
+    const start = (currentPage - 1) * ROWS_PER_PAGE;
+    const end = start + ROWS_PER_PAGE;
+    const pageSlice = filteredRows.slice(start, end);
+
+    // 3. Show only sliced rows
+    pageSlice.forEach((row) => (row.style.display = ""));
+
+    // 4. Update UI Components
+    updatePaginationUI(totalPages);
+    updatePageLabel(start + 1, Math.min(end, totalItems), totalItems);
+  }
+
+  function updatePaginationUI(totalPages) {
+    paginationContainer.innerHTML = "";
+    if (totalPages <= 1) return;
+
+    // Previous Button
+    const prevBtn = createPageBtn(
+      '<i class="fa-solid fa-chevron-left"></i>',
+      () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderTable();
+        }
+      },
+    );
+    paginationContainer.appendChild(prevBtn);
+
+    // Page Numbers
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = createPageBtn(i, () => {
+        currentPage = i;
+        renderTable();
+      });
+      if (i === currentPage) btn.classList.add("active");
+      paginationContainer.appendChild(btn);
     }
 
-    return txt.includes(trainerVal);
+    // Next Button
+    const nextBtn = createPageBtn(
+      '<i class="fa-solid fa-chevron-right"></i>',
+      () => {
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderTable();
+        }
+      },
+    );
+    paginationContainer.appendChild(nextBtn);
   }
 
-  /* ── Update the "Showing X–Y of Z members" label ──────── */
-  function updatePageInfo(visible, total) {
-    if (!pageInfo) return;
+  function createPageBtn(content, onClick) {
+    const btn = document.createElement("button");
+    btn.className = "page-btn";
+    btn.innerHTML = content;
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      onClick();
+      // Smooth scroll back to table top
+      document
+        .querySelector(".members-table")
+        .scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    return btn;
+  }
 
-    if (visible === total) {
-      /* No active filter — restore original server-side text */
-      pageInfo.dataset.original =
-        pageInfo.dataset.original || pageInfo.textContent;
-      pageInfo.textContent = pageInfo.dataset.original;
+  function updatePageLabel(start, end, total) {
+    if (total === 0) {
+      pageInfo.textContent = "No members match your filters";
     } else {
-      pageInfo.dataset.original =
-        pageInfo.dataset.original || pageInfo.textContent;
-      pageInfo.textContent =
-        visible === 0
-          ? "No members match your filters"
-          : `Showing ${visible} filtered result${visible !== 1 ? "s" : ""}`;
+      pageInfo.textContent = `Showing ${start}–${end} of ${total} members`;
     }
   }
 
-  /* ── Hide pagination when filtering (avoids confusion) ── */
-  function updatePaginationVisibility(filtering) {
-    const paginationBtns = document.querySelector(".page-btns");
-    if (paginationBtns) {
-      paginationBtns.style.opacity = filtering ? "0.35" : "";
-      paginationBtns.style.pointerEvents = filtering ? "none" : "";
-      paginationBtns.title = filtering ? "Clear filters to use pagination" : "";
-    }
-  }
+  /* ── Event Listeners ──────────────────────────────────── */
+  filterSearch.addEventListener("input", () => {
+    applyFilters();
+  });
 
-  /* ── Debounce helper ─────────────────────────────────── */
-  function debounce(fn, ms) {
-    let t;
-    return (...args) => {
-      clearTimeout(t);
-      t = setTimeout(() => fn(...args), ms);
-    };
-  }
-
-  /* ── Wire up events ──────────────────────────────────── */
-  filterSearch.addEventListener("input", debounce(applyFilters, 220));
   filterStatus.addEventListener("change", applyFilters);
   filterTrainer.addEventListener("change", applyFilters);
 
-  /* ── Populate trainer dropdown from live table data ──── */
-  (function populateTrainerDropdown() {
-    const seen = new Set();
-    let hasUnassigned = false;
-
-    getRows().forEach((row) => {
-      const txt = trainerText(row);
-      if (txt.includes("n/a") || txt.includes("unassign")) {
-        hasUnassigned = true;
-      } else if (txt) {
-        const raw = (
-          row.querySelector(".trainer-assigned")?.textContent || ""
-        ).trim();
-        if (raw && raw.toLowerCase() !== "n/a") seen.add(raw);
-      }
-    });
-
-    while (filterTrainer.options.length > 1) filterTrainer.remove(1);
-
-    seen.forEach((name) => {
-      const opt = document.createElement("option");
-      opt.value = name.toLowerCase();
-      opt.textContent = name;
-      filterTrainer.appendChild(opt);
-    });
-
-    if (hasUnassigned) {
-      const opt = document.createElement("option");
-      opt.value = "none";
-      opt.textContent = "Unassigned";
-      filterTrainer.appendChild(opt);
-    }
-  })();
-  (function persistFiltersInPaginationLinks() {
-    function refreshLinks() {
-      const q = filterSearch.value.trim();
-      const status = filterStatus.value;
-      const trainer = filterTrainer.value;
-
-      document.querySelectorAll(".page-btns a").forEach((a) => {
-        const url = new URL(a.href, location.href);
-        if (q) url.searchParams.set("q", q);
-        else url.searchParams.delete("q");
-        if (status) url.searchParams.set("status", status);
-        else url.searchParams.delete("status");
-        if (trainer) url.searchParams.set("trainer", trainer);
-        else url.searchParams.delete("trainer");
-        a.href = url.toString();
-      });
-    }
-
-    filterSearch.addEventListener("input", debounce(refreshLinks, 300));
-    filterStatus.addEventListener("change", refreshLinks);
-    filterTrainer.addEventListener("change", refreshLinks);
-    const params = new URLSearchParams(location.search);
-    if (params.get("q")) filterSearch.value = params.get("q");
-    if (params.get("status")) filterStatus.value = params.get("status");
-    if (params.get("trainer")) filterTrainer.value = params.get("trainer");
-    if (params.get("q") || params.get("status") || params.get("trainer")) {
-      applyFilters();
-    }
-  })();
-
-  /* ── Also wire the topbar search box ─────────────────── */
-  const topbarSearch = document.querySelector(".topbar .search-box input");
-  if (topbarSearch) {
-    topbarSearch.addEventListener(
-      "input",
-      debounce(function () {
-        filterSearch.value = topbarSearch.value;
-        applyFilters();
-        /* Scroll to table */
-        document
-          .querySelector(".members-table")
-          ?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 250),
-    );
-  }
+  // Initial Run
+  applyFilters();
 })();
