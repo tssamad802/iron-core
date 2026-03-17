@@ -154,7 +154,7 @@ foreach ($members as &$member) {
                         <option value="">All Trainers</option>
                         <?php
                         foreach ($trainers as $row) { ?>
-                        <option><?php $row['fullname'] ?></option>
+                            <option><?php $row['fullname'] ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -553,4 +553,5 @@ foreach ($members as &$member) {
 <script src="./js/script.js"></script>
 <script src="./js/member-filter.js"></script>
 <script src="./js/theme.js"></script>
+
 </html>
