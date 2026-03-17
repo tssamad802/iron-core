@@ -5,7 +5,6 @@ $router = new Router('/iron-core');
 $router
     ->add(['/', '/home', '/login'], 'pages/login.php')
     ->add('/dashboard', 'pages/admin/dashboard.php')
-    ->add('/forget-password', 'pages/forget_pwd.php')
     ->add('/trainer-dashboard', 'pages/trainer/trainer-dash.php')
     ->add('/trainer-clients', 'pages/trainer/clients.php')
     ->add('/gear-dashboard', 'pages/member/gear-dash.php')
