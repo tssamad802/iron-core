@@ -138,7 +138,7 @@ $total_members = $controller->count('users', ['role' => 2]);
                         <option value="">All Trainers</option>
                         <?php
                         foreach ($trainers as $row) { ?>
-                            <option><?php $row['fullname'] ?></option>
+                            <option><?php echo $row['fullname']; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -232,9 +232,7 @@ $total_members = $controller->count('users', ['role' => 2]);
 
                 <!-- PAGINATION -->
                 <div class="pagination" id="pagination">
-                    <span class="page-info">
-                        Showing 1–5 of 20 members
-                    </span>
+                    <span class="page-info"></span>
                     <div class="page-btns">
                     </div>
                 </div>
