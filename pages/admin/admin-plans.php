@@ -14,7 +14,6 @@ $join = "
 INNER JOIN users AS trainer ON trainer.id = plan.trainer_id
 INNER JOIN role ON trainer.role = role.id
 INNER JOIN status ON plan.plan_status = status.id
-LEFT JOIN plan_clients ON plan_clients.plan_id = plan.id
 ";
 $columns = [
     'plan.*',
