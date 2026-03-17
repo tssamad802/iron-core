@@ -72,6 +72,7 @@ foreach ($dates as $date_str) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IronCore — My Dashboard</title>
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/theme.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <link
         href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap"
@@ -213,6 +214,7 @@ foreach ($dates as $date_str) {
         function activateTab(el) { const g = el.closest('.tab-group'); if (!g) return; g.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); el.classList.add('active'); }
         function doLogout() { showToast('👋', 'See you next session!', 'Rest well, come back stronger'); setTimeout(() => { window.location.href = 'login'; }, 1000); }
     </script>
+    <script src="./js/theme.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,701 @@
+/* ═══════════════════════════════════════════════════
+   GYMFLOW — THEME SYSTEM
+   Light / Dark mode via [data-theme="light"] on <html>
+   Drop this AFTER style.css in every page's <head>
+═══════════════════════════════════════════════════ */
+
+/* ── Dark mode is the default (already in style.css) ── */
+
+/* ── Light mode overrides ── */
+html[data-theme="light"] {
+  --bg-deep: #f0f2f7;
+  --bg-main: #f0f2f7;
+  --bg-panel: #ffffff;
+  --bg-card: #ffffff;
+  --bg-hover: #f5f6fa;
+  --bg-sidebar: #ffffff;
+
+  --border: #e2e5ee;
+  --border-md: rgba(0, 0, 0, 0.1);
+  --border-accent: rgba(255, 69, 0, 0.35);
+
+  --accent: #e63d00;
+  --accent2: #ff6b2b;
+  --accent-dim: rgba(230, 61, 0, 0.08);
+  --accent-glow: rgba(230, 61, 0, 0.25);
+
+  --text-prime: #111827;
+  --text-sec: #4b5563;
+  --text-dim: #9ca3af;
+
+  --green: #16a34a;
+  --green-dim: rgba(22, 163, 74, 0.1);
+  --blue: #2563eb;
+  --blue-dim: rgba(37, 99, 235, 0.1);
+  --yellow: #d97706;
+  --yellow-dim: rgba(217, 119, 6, 0.1);
+  --red: #dc2626;
+  --red-dim: rgba(220, 38, 38, 0.1);
+  --purple: #7c3aed;
+
+  --shadow-card: 0 1px 10px rgba(0, 0, 0, 0.08), 0 4px 20px rgba(0, 0, 0, 0.04);
+  --shadow-accent: 0 4px 18px rgba(230, 61, 0, 0.28);
+  --shadow-glow: 0 0 30px rgba(230, 61, 0, 0.15);
+}
+
+/* ── Body background ── */
+html[data-theme="light"] body {
+  background: var(--bg-deep);
+  color: var(--text-prime);
+}
+
+/* ── Sidebar ── */
+html[data-theme="light"] .sidebar {
+  background: var(--bg-panel);
+  border-right-color: var(--border);
+  box-shadow: 2px 0 20px rgba(0, 0, 0, 0.07);
+}
+
+html[data-theme="light"] .sidebar-logo {
+  border-bottom-color: var(--border);
+}
+
+html[data-theme="light"] .nav-item {
+  color: var(--text-sec);
+}
+
+html[data-theme="light"] .nav-item:hover {
+  background: var(--bg-hover);
+  color: var(--text-prime);
+  border-left-color: var(--border);
+}
+
+html[data-theme="light"] .nav-item.active {
+  background: var(--accent-dim);
+  color: var(--accent);
+  border-left-color: var(--accent);
+}
+
+html[data-theme="light"] .sidebar-footer {
+  border-top-color: var(--border);
+}
+
+html[data-theme="light"] .sidebar-user {
+  background: var(--bg-hover);
+  border-color: var(--border);
+}
+
+html[data-theme="light"] .sidebar-user:hover {
+  border-color: var(--accent);
+}
+
+html[data-theme="light"] .logo-sub,
+html[data-theme="light"] .nav-group-label,
+html[data-theme="light"] .user-meta .role {
+  color: var(--text-dim);
+}
+
+html[data-theme="light"] .logo-text {
+  color: var(--text-prime);
+}
+
+html[data-theme="light"] .user-meta .name {
+  color: var(--text-prime);
+}
+
+/* ── Topbar ── */
+html[data-theme="light"] .topbar {
+  background: #ffffff;
+  border-bottom-color: var(--border);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+}
+
+html[data-theme="light"] .topbar-profile {
+  background: var(--bg-hover);
+  border-color: var(--border);
+}
+
+html[data-theme="light"] .topbar-profile:hover {
+  border-color: var(--accent);
+}
+
+html[data-theme="light"] .tp-name {
+  color: var(--text-prime);
+}
+
+html[data-theme="light"] .menu-btn {
+  background: var(--bg-hover);
+  border-color: var(--border);
+  color: var(--text-sec);
+}
+
+html[data-theme="light"] .logout-btn {
+  background: rgba(220, 38, 38, 0.07);
+  border-color: rgba(220, 38, 38, 0.2);
+  color: var(--red);
+}
+
+html[data-theme="light"] .logout-btn:hover {
+  background: rgba(220, 38, 38, 0.14);
+  border-color: var(--red);
+}
+
+/* ── Cards ── */
+html[data-theme="light"] .card {
+  background: #ffffff;
+  border-color: var(--border);
+  box-shadow: var(--shadow-card);
+}
+
+html[data-theme="light"] .card:hover {
+  border-color: rgba(230, 61, 0, 0.2);
+}
+
+html[data-theme="light"] .card-title {
+  color: var(--text-prime);
+}
+
+/* ── Stat Cards ── */
+html[data-theme="light"] .stat-card {
+  background: #ffffff;
+  border-color: var(--border);
+  box-shadow: var(--shadow-card);
+}
+
+html[data-theme="light"] .stat-lbl {
+  color: var(--text-sec);
+}
+
+html[data-theme="light"] .stat-val {
+  color: var(--text-prime);
+}
+
+html[data-theme="light"] .stat-card.orange .stat-icon {
+  background: rgba(230, 61, 0, 0.08);
+}
+html[data-theme="light"] .stat-card.green .stat-icon {
+  background: rgba(22, 163, 74, 0.08);
+}
+html[data-theme="light"] .stat-card.blue .stat-icon {
+  background: rgba(37, 99, 235, 0.08);
+}
+html[data-theme="light"] .stat-card.yellow .stat-icon {
+  background: rgba(217, 119, 6, 0.08);
+}
+
+/* ── Form inputs ── */
+html[data-theme="light"] .form-input,
+html[data-theme="light"] .form-select,
+html[data-theme="light"] .filter-select,
+html[data-theme="light"] .ffe-select,
+html[data-theme="light"] .fees-search input,
+html[data-theme="light"] .fees-select,
+html[data-theme="light"] .ph-search input,
+html[data-theme="light"] .mp-search input,
+html[data-theme="light"] .plans-search input {
+  background: #f9fafb;
+  border-color: var(--border);
+  color: var(--text-prime);
+}
+
+html[data-theme="light"] .form-input::placeholder,
+html[data-theme="light"] .fees-search input::placeholder,
+html[data-theme="light"] .ph-search input::placeholder,
+html[data-theme="light"] .mp-search input::placeholder,
+html[data-theme="light"] .plans-search input::placeholder {
+  color: var(--text-dim);
+}
+
+html[data-theme="light"] .form-input:focus,
+html[data-theme="light"] .form-select:focus,
+html[data-theme="light"] .ffe-select:focus {
+  background: #ffffff;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-dim);
+}
+
+html[data-theme="light"] .form-label,
+html[data-theme="light"] .ffe-label {
+  color: var(--text-sec);
+}
+
+html[data-theme="light"] .input-icon {
+  color: var(--text-dim);
+}
+
+/* ── Tables ── */
+html[data-theme="light"] .data-table th,
+html[data-theme="light"] .fees-table thead th,
+html[data-theme="light"] .ph-table thead th,
+html[data-theme="light"] .mp-table thead th,
+html[data-theme="light"] .plans-table thead th,
+html[data-theme="light"] .clients-table thead th,
+html[data-theme="light"] .exercises-table thead th,
+html[data-theme="light"] .listing-table thead th {
+  color: var(--text-dim);
+  border-bottom-color: var(--border);
+  background: rgba(0, 0, 0, 0.015);
+}
+
+html[data-theme="light"] .data-table td,
+html[data-theme="light"] .fees-table td,
+html[data-theme="light"] .ph-table td,
+html[data-theme="light"] .mp-table td,
+html[data-theme="light"] .plans-table td,
+html[data-theme="light"] .clients-table td,
+html[data-theme="light"] .exercises-table td,
+html[data-theme="light"] .listing-table td {
+  border-bottom-color: var(--border);
+  color: var(--text-sec);
+}
+
+html[data-theme="light"] .data-table tbody tr:hover,
+html[data-theme="light"] .fees-table tbody tr:hover,
+html[data-theme="light"] .ph-table tbody tr:hover,
+html[data-theme="light"] .mp-table tbody tr:hover,
+html[data-theme="light"] .plans-table tbody tr:hover,
+html[data-theme="light"] .clients-table tbody tr:hover {
+  background: var(--bg-hover);
+}
+
+/* ── Page headers ── */
+html[data-theme="light"] .page-title-block .title,
+html[data-theme="light"] .page-title {
+  color: var(--text-prime);
+}
+
+html[data-theme="light"] .page-title-block .subtitle,
+html[data-theme="light"] .page-sub {
+  color: var(--text-sec);
+}
+
+/* ── Pagination ── */
+html[data-theme="light"] .pag-btn,
+html[data-theme="light"] .fees-pag-btn,
+html[data-theme="light"] .ph-pag-btn,
+html[data-theme="light"] .mp-pag-btn,
+html[data-theme="light"] .listing-pag-btn {
+  background: #ffffff;
+  border-color: var(--border);
+  color: var(--text-sec);
+}
+
+html[data-theme="light"] .pag-info,
+html[data-theme="light"] .fees-pag-info,
+html[data-theme="light"] .ph-pag-info,
+html[data-theme="light"] .mp-pag-info {
+  color: var(--text-dim);
+}
+
+/* ── Modal ── */
+html[data-theme="light"] .modal,
+html[data-theme="light"] .mp-modal {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15);
+}
+
+html[data-theme="light"] .modal-header,
+html[data-theme="light"] .mp-modal-header {
+  background: #f9fafb;
+}
+
+html[data-theme="light"] .modal-title,
+html[data-theme="light"] .mp-modal-title {
+  color: var(--text-prime);
+}
+
+html[data-theme="light"] .modal-subtitle,
+html[data-theme="light"] .modal-close {
+  color: var(--text-sec);
+}
+
+html[data-theme="light"] .modal-close:hover {
+  background: var(--red-dim);
+  border-color: var(--red);
+  color: var(--red);
+}
+
+html[data-theme="light"] .modal-body,
+html[data-theme="light"] .mp-modal-body {
+  background: #ffffff;
+}
+
+html[data-theme="light"] .modal-footer,
+html[data-theme="light"] .mp-modal-footer {
+  background: #f9fafb;
+  border-top-color: var(--border);
+}
+
+html[data-theme="light"] .modal-divider,
+html[data-theme="light"] .mp-modal-divider {
+  background: var(--border);
+}
+
+/* ── Panel backgrounds (card headers, footers etc.) ── */
+html[data-theme="light"] .fees-card-header,
+html[data-theme="light"] .ph-header,
+html[data-theme="light"] .mp-card-header,
+html[data-theme="light"] .plans-card-header,
+html[data-theme="light"] .clients-card-header,
+html[data-theme="light"] .exercises-card-header,
+html[data-theme="light"] .listing-header,
+html[data-theme="light"] .fee-form-header,
+html[data-theme="light"] .fee-form-footer,
+html[data-theme="light"] .fees-pagination,
+html[data-theme="light"] .ph-pagination,
+html[data-theme="light"] .mp-pagination,
+html[data-theme="light"] .plans-pagination,
+html[data-theme="light"] .listing-pagination,
+html[data-theme="light"] .pag-bar {
+  background: #f9fafb;
+  border-color: var(--border);
+}
+
+html[data-theme="light"] .fees-card-title,
+html[data-theme="light"] .ph-title,
+html[data-theme="light"] .mp-card-title,
+html[data-theme="light"] .plans-card-title {
+  color: var(--text-prime);
+}
+
+html[data-theme="light"] .fees-card-subtitle,
+html[data-theme="light"] .ph-subtitle,
+html[data-theme="light"] .mp-card-subtitle {
+  color: var(--text-sec);
+}
+
+/* ── Plan hero ── */
+html[data-theme="light"] .plan-hero {
+  background: #ffffff;
+  border-color: var(--border);
+}
+
+html[data-theme="light"] .plan-hero-name {
+  color: var(--text-prime);
+}
+
+html[data-theme="light"] .plan-kpi {
+  background: #ffffff;
+  border-color: var(--border);
+}
+
+/* ── Art panel (login / forgot pwd) ── */
+html[data-theme="light"] .art-panel {
+  background: #1a1a2e; /* keep dark for contrast */
+}
+
+html[data-theme="light"] .form-panel {
+  background: #ffffff;
+  border-left-color: var(--border);
+}
+
+html[data-theme="light"] .form-title {
+  color: var(--text-prime);
+}
+
+html[data-theme="light"] .form-desc {
+  color: var(--text-sec);
+}
+
+html[data-theme="light"] .secure-badge {
+  background: var(--accent-dim);
+  border-color: rgba(230, 61, 0, 0.25);
+}
+
+html[data-theme="light"] .check-box {
+  background: #f3f4f6;
+  border-color: var(--border);
+}
+
+html[data-theme="light"] .remember span {
+  color: var(--text-sec);
+}
+
+/* ── Scrollbar in light mode ── */
+html[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+}
+
+html[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ── Toast in light ── */
+html[data-theme="light"] .toast {
+  background: #ffffff;
+  border-color: rgba(230, 61, 0, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+html[data-theme="light"] .toast-title {
+  color: var(--text-prime);
+}
+
+html[data-theme="light"] .toast-sub {
+  color: var(--text-sec);
+}
+
+/* ── Workout plan cards ── */
+html[data-theme="light"] .wp-plan-card {
+  background: #ffffff;
+  border-color: var(--border);
+}
+
+html[data-theme="light"] .plan-name {
+  color: var(--text-prime);
+}
+
+html[data-theme="light"] .plan-desc {
+  color: var(--text-sec);
+}
+
+html[data-theme="light"] .card-dropdown {
+  background: #ffffff;
+  border-color: var(--border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+html[data-theme="light"] .card-dropdown button {
+  color: var(--text-sec);
+}
+
+html[data-theme="light"] .card-dropdown button:hover {
+  background: var(--bg-hover);
+  color: var(--text-prime);
+}
+
+/* ── Sidebar inner panels ── */
+html[data-theme="light"] .wp-exercises-section,
+html[data-theme="light"] .mp-meal-card,
+html[data-theme="light"] .side-card,
+html[data-theme="light"] .mp-modal-member-row {
+  background: #f9fafb;
+  border-color: var(--border);
+}
+
+html[data-theme="light"] .side-card-header {
+  background: #f3f4f6;
+  border-bottom-color: var(--border);
+}
+
+html[data-theme="light"] .info-label {
+  color: var(--text-dim);
+}
+
+html[data-theme="light"] .info-val {
+  color: var(--text-prime);
+}
+
+html[data-theme="light"] .info-row {
+  border-bottom-color: var(--border);
+}
+
+/* ── Misc text elements ── */
+html[data-theme="light"] .member-name,
+html[data-theme="light"] .client-name,
+html[data-theme="light"] .ph-member-name,
+html[data-theme="light"] .mp-member-name,
+html[data-theme="light"] .fee-member-name,
+html[data-theme="light"] .plan-name-text,
+html[data-theme="light"] .ex-name,
+html[data-theme="light"] .ex-modal-name {
+  color: var(--text-prime);
+}
+
+html[data-theme="light"] .member-email,
+html[data-theme="light"] .client-email,
+html[data-theme="light"] .ph-member-id,
+html[data-theme="light"] .mp-member-id,
+html[data-theme="light"] .fee-member-id,
+html[data-theme="light"] .plan-name-sub {
+  color: var(--text-dim);
+}
+
+/* ── Error message ── */
+html[data-theme="light"] .error-msg {
+  background: rgba(220, 38, 38, 0.06);
+  border-left-color: var(--red);
+  color: var(--red);
+}
+
+/* ── Filter search ── */
+html[data-theme="light"] .filter-search input {
+  background: #f9fafb;
+  border-color: var(--border);
+  color: var(--text-prime);
+}
+
+html[data-theme="light"] .filter-search input::placeholder {
+  color: var(--text-dim);
+}
+
+/* ── Diet form ── */
+html[data-theme="light"] .diet-form-card,
+html[data-theme="light"] .fee-form-card {
+  background: #ffffff;
+  border-color: var(--border);
+}
+
+html[data-theme="light"] .diet-form-header,
+html[data-theme="light"] .diet-form-footer,
+html[data-theme="light"] .diet-form-body {
+  background: #ffffff;
+}
+
+html[data-theme="light"] .diet-form-title,
+html[data-theme="light"] .fee-form-title {
+  color: var(--text-prime);
+}
+
+html[data-theme="light"] .meal-row {
+  background: #f9fafb;
+  border-color: var(--border);
+}
+
+html[data-theme="light"] .meal-row-input {
+  background: #ffffff;
+  border-color: var(--border);
+  color: var(--text-prime);
+}
+
+/* ── Payment alert ── */
+html[data-theme="light"] .payment-alert {
+  background: #fff5f5;
+  color: #b91c1c;
+  border-left-color: var(--red);
+}
+
+/* ══════════════════════════════════════════════
+   THEME TOGGLE BUTTON — universal style
+   Works on all pages when placed in topbar / form-panel
+══════════════════════════════════════════════ */
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  cursor: pointer;
+  transition: all 0.22s ease;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  color: var(--text-sec);
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-dim);
+  transform: rotate(20deg);
+}
+
+.theme-toggle-btn:active {
+  transform: rotate(0deg) scale(0.9);
+}
+
+.theme-toggle-btn .icon-sun,
+.theme-toggle-btn .icon-moon {
+  position: absolute;
+  transition:
+    opacity 0.25s ease,
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-size: 16px;
+}
+
+/* Dark mode: show moon, hide sun */
+.theme-toggle-btn .icon-sun {
+  opacity: 0;
+  transform: translateY(12px) rotate(-90deg);
+}
+.theme-toggle-btn .icon-moon {
+  opacity: 1;
+  transform: translateY(0) rotate(0deg);
+}
+
+/* Light mode: show sun, hide moon */
+html[data-theme="light"] .theme-toggle-btn .icon-sun {
+  opacity: 1;
+  transform: translateY(0) rotate(0deg);
+}
+html[data-theme="light"] .theme-toggle-btn .icon-moon {
+  opacity: 0;
+  transform: translateY(-12px) rotate(90deg);
+}
+
+html[data-theme="light"] .theme-toggle-btn {
+  border-color: var(--border);
+  background: #f9fafb;
+  color: var(--text-sec);
+}
+
+html[data-theme="light"] .theme-toggle-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+
+/* ── Login-page specific toggle (bottom-right of form panel) ── */
+.theme-toggle-login {
+  position: absolute;
+  bottom: 28px;
+  right: 28px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  overflow: hidden;
+  color: var(--text-sec);
+}
+
+.theme-toggle-login:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 20px var(--accent-glow);
+  transform: scale(1.1) rotate(20deg);
+  color: var(--accent);
+}
+
+html[data-theme="light"] .theme-toggle-login {
+  background: #ffffff;
+  border-color: var(--border);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle-login .icon-sun,
+.theme-toggle-login .icon-moon {
+  position: absolute;
+  font-size: 18px;
+  transition:
+    opacity 0.25s ease,
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.theme-toggle-login .icon-sun {
+  opacity: 0;
+  transform: translateY(14px) rotate(-90deg);
+}
+.theme-toggle-login .icon-moon {
+  opacity: 1;
+  transform: translateY(0) rotate(0deg);
+}
+
+html[data-theme="light"] .theme-toggle-login .icon-sun {
+  opacity: 1;
+  transform: translateY(0) rotate(0deg);
+}
+html[data-theme="light"] .theme-toggle-login .icon-moon {
+  opacity: 0;
+  transform: translateY(-14px) rotate(90deg);
+}

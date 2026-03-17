@@ -26,6 +26,16 @@
     $initials = strtoupper(substr($names[0], 0, 1) . (isset($names[1]) ? substr($names[1], 0, 1) : ''));
     ?>
     <div class="sidebar-footer">
+        <!-- Theme Toggle Row -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 13px 10px;gap:8px;">
+            <span
+                style="font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);">Appearance</span>
+            <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle light/dark mode"
+                aria-label="Toggle theme">
+                <i class="fa-solid fa-sun  icon-sun"></i>
+                <i class="fa-solid fa-moon icon-moon"></i>
+            </button>
+        </div>
         <div class="sidebar-user">
             <div
                 style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#c23500);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;">

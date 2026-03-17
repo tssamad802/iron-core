@@ -6,11 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>IronCore Gym — Forgot Password</title>
   <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/theme.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
   <link
     href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap"
     rel="stylesheet" />
   <link rel="shortcut icon" href="./images/logo.png" type="image/x-icon">
+  <script src="./js/theme.js"></script>
 </head>
 
 <body>
@@ -218,6 +220,12 @@
     </div>
 
   </div><!-- /form-panel -->
+
+  <!-- ══ THEME TOGGLE ══ -->
+  <button class="theme-toggle-login" onclick="toggleTheme()" title="Toggle light / dark mode" aria-label="Toggle theme">
+    <i class="fa-solid fa-sun  icon-sun"></i>
+    <i class="fa-solid fa-moon icon-moon"></i>
+  </button>
 
   <!-- Toast -->
   <div class="toast" id="toast" style="display:none;">

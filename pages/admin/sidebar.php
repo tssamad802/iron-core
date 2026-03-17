@@ -32,9 +32,9 @@
         </a>
         <a href="./admin-plan">
             <div class="nav-item clickable">
-            <span class="nav-icon"><i class="fa-solid fa-list-check"></i></span>
-            Plans
-        </div>
+                <span class="nav-icon"><i class="fa-solid fa-list-check"></i></span>
+                Plans
+            </div>
         </a>
 
         <div class="nav-group-label">Finance</div>
@@ -48,6 +48,16 @@
     </nav>
 
     <div class="sidebar-footer">
+        <!-- Theme Toggle Row -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 13px 10px;gap:8px;">
+            <span
+                style="font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);">Appearance</span>
+            <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle light/dark mode"
+                aria-label="Toggle theme">
+                <i class="fa-solid fa-sun  icon-sun"></i>
+                <i class="fa-solid fa-moon icon-moon"></i>
+            </button>
+        </div>
         <div class="sidebar-user">
             <?php
             $name = $auth->show_name();

@@ -75,6 +75,17 @@ $navItems = [
             <i class="fas fa-sign-out-alt"></i>
             <span>Logout</span>
         </button>
+
+        <!-- Theme Toggle Row -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 4px 0;gap:8px;">
+            <span
+                style="font-family:'Rajdhani',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);">Appearance</span>
+            <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle light/dark mode"
+                aria-label="Toggle theme">
+                <i class="fas fa-sun  icon-sun"></i>
+                <i class="fas fa-moon icon-moon"></i>
+            </button>
+        </div>
     </div>
 
 </aside>

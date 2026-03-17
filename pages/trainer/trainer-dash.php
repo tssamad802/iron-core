@@ -52,6 +52,7 @@ foreach ($today_session as $plan) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | GymFlow</title>
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/theme.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="shortcut icon" href="./images/logo.png" type="image/x-icon">
 </head>
@@ -128,5 +129,6 @@ foreach ($today_session as $plan) {
     </div>
 </body>
 <script src="./js/script.js"></script>
+<script src="./js/theme.js"></script>
 
 </html>
