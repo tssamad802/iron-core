@@ -1,168 +1,180 @@
 <div align="center">
 
-# 🏋️ Iron Core
+<img src="https://readme-typing-svg.demolab.com?font=Bebas+Neue&size=60&duration=3000&pause=1000&color=FF4500&center=true&vCenter=true&width=600&lines=IRON+CORE;GYM+MANAGEMENT+SYSTEM" alt="Iron Core" />
 
-**A full-featured gym management dashboard for Admins, Members, and Trainers**
+<br/>
 
-![PHP](https://img.shields.io/badge/PHP-53.9%25-777BB4?style=for-the-badge&logo=php&logoColor=white)
-![CSS](https://img.shields.io/badge/CSS-37.3%25-264DE4?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-6.9%25-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+<img src="https://img.shields.io/badge/PHP-53.9%25-777BB4?style=for-the-badge&logo=php&logoColor=white"/>
+<img src="https://img.shields.io/badge/CSS-37.3%25-1572B6?style=for-the-badge&logo=css3&logoColor=white"/>
+<img src="https://img.shields.io/badge/JavaScript-6.9%25-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/>
+<img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge"/>
 
-[![GitHub Stars](https://img.shields.io/github/stars/tssamad802/iron-core?style=flat-square)](https://github.com/tssamad802/iron-core/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/tssamad802/iron-core?style=flat-square)](https://github.com/tssamad802/iron-core/network/members)
-[![GitHub Issues](https://img.shields.io/github/issues/tssamad802/iron-core?style=flat-square)](https://github.com/tssamad802/iron-core/issues)
-[![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
+<br/><br/>
+
+> **A powerful, full-featured gym management dashboard for Admins, Members, and Trainers.**  
+> Streamline your fitness facility — all from one clean, modern interface.
+
+<br/>
+
+---
 
 </div>
 
----
+## 🏋️ What is Iron Core?
 
-## 📖 Overview
+**Iron Core** is a web-based gym management system built with PHP. It provides a centralized dashboard experience tailored for three distinct user roles — **Admins**, **Members**, and **Trainers** — each with their own dedicated views, controls, and features.
 
-**Iron Core** is a comprehensive gym management system built with PHP, CSS, and JavaScript. It provides dedicated dashboards for three types of users — **Admins**, **Members**, and **Trainers** — making it easy to manage every aspect of a gym from a single platform.
-
-Whether you're running a small fitness studio or a large gym chain, Iron Core gives you the tools to streamline operations, track memberships, manage schedules, and keep your community connected.
+Whether you're managing memberships, scheduling sessions, or tracking fitness progress, Iron Core has you covered.
 
 ---
 
-## ✨ Features
+## ✨ Features at a Glance
 
-### 🔐 Role-Based Access
-| Role | Capabilities |
-|------|-------------|
-| **Admin** | Full control — manage members, trainers, schedules, and reports |
-| **Trainer** | View assigned members, manage sessions, track progress |
-| **Member** | View membership details, schedule, and progress |
-
-### 🗂️ Core Modules
-- **Dashboard Overview** — At-a-glance stats for the whole gym
-- **Member Management** — Register, update, and track gym members
-- **Trainer Management** — Assign trainers and manage their profiles
-- **Schedule Management** — Organize classes and personal training sessions
-- **User Authentication** — Secure login system for all user roles
-- **Responsive UI** — Clean, mobile-friendly interface styled with custom CSS
+| 🔑 Feature | 📋 Description |
+|---|---|
+| 🛡️ **Multi-Role Dashboard** | Separate panels for Admin, Member, and Trainer |
+| 👥 **Member Management** | Register, view, edit, and remove gym members |
+| 🏃 **Trainer Management** | Assign trainers, manage schedules and profiles |
+| 📅 **Session Scheduling** | Plan and organize workout sessions |
+| 💳 **Membership Tracking** | Monitor plans, renewals, and payment status |
+| 📊 **Admin Analytics** | Get a bird's-eye view of gym operations |
+| 📱 **Responsive UI** | Clean, modern design that works across devices |
+| 🔐 **Secure Auth** | Role-based login with access control |
 
 ---
 
-## 📁 Project Structure
+## 🗂️ Project Structure
 
 ```
 iron-core/
-├── css/              # Stylesheets and UI themes
-├── images/           # Icons, logos, and media assets
-├── includes/         # Reusable PHP components (header, footer, DB config)
-├── js/               # JavaScript for interactivity and UI logic
-├── pages/            # Individual dashboard pages per role
-├── index.php         # Application entry point
-└── .htaccess         # Apache configuration and URL routing
+│
+├── 📁 css/            # Stylesheets for the dashboard UI
+├── 📁 images/         # Icons, logos, and media assets
+├── 📁 includes/       # Reusable PHP components (header, footer, DB config)
+├── 📁 js/             # JavaScript for interactivity & UI enhancements
+├── 📁 pages/          # Role-specific dashboard pages
+│   ├── admin/         # Admin panel pages
+│   ├── member/        # Member portal pages
+│   └── trainer/       # Trainer dashboard pages
+│
+├── 🔧 .htaccess       # Apache URL rewriting & access rules
+└── 🚀 index.php       # Application entry point & router
 ```
 
 ---
 
-## 🚀 Getting Started
+## ⚙️ Getting Started
 
 ### Prerequisites
 
 Make sure you have the following installed:
 
 - **PHP** >= 7.4
-- **MySQL** or **MariaDB**
+- **MySQL** / **MariaDB**
 - **Apache** web server (with `mod_rewrite` enabled)
-- Or use a local stack like **XAMPP**, **WAMP**, or **LAMP**
+- A local server environment like **XAMPP**, **WAMP**, or **Laragon**
 
 ### Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/tssamad802/iron-core.git
-   cd iron-core
-   ```
+```bash
+# 1. Clone the repository
+git clone https://github.com/tssamad802/iron-core.git
 
-2. **Move to your web server's root directory**
-   ```bash
-   # For XAMPP on Windows:
-   cp -r iron-core/ C:/xampp/htdocs/iron-core
+# 2. Move the project to your server's root directory
+# e.g., for XAMPP:
+cp -r iron-core /xampp/htdocs/
 
-   # For LAMP on Linux:
-   cp -r iron-core/ /var/www/html/iron-core
-   ```
+# 3. Import the database
+# Open phpMyAdmin → Create a new database → Import the provided SQL file
 
-3. **Set up the database**
-   - Open **phpMyAdmin** or your preferred MySQL client
-   - Create a new database (e.g., `iron_core_db`)
-   - Import the SQL file from the `includes/` directory (if provided)
+# 4. Configure the database connection
+# Edit includes/config.php (or db.php) with your credentials:
+#   DB_HOST, DB_USER, DB_PASS, DB_NAME
 
-4. **Configure the database connection**
-   - Open `includes/config.php` (or similar)
-   - Update your DB credentials:
-   ```php
-   define('DB_HOST', 'localhost');
-   define('DB_USER', 'your_username');
-   define('DB_PASS', 'your_password');
-   define('DB_NAME', 'iron_core_db');
-   ```
-
-5. **Launch the app**
-   - Start Apache and MySQL via your server panel
-   - Visit `http://localhost/iron-core` in your browser
+# 5. Launch in your browser
+http://localhost/iron-core
+```
 
 ---
 
-## 🖥️ Usage
+## 👥 User Roles
 
-Once the app is running, log in using your role credentials:
+<table>
+<tr>
+<td align="center" width="33%">
 
-| Role | Default Login |
-|------|--------------|
-| Admin | Set during setup |
-| Trainer | Created by Admin |
-| Member | Registered via Admin |
+### 🔴 Admin
+- Full system control
+- Manage members & trainers
+- View reports & analytics
+- Configure gym settings
+- Handle memberships & billing
 
-Each role will be redirected to their own dedicated dashboard upon login.
+</td>
+<td align="center" width="33%">
+
+### 🔵 Trainer
+- View assigned members
+- Manage training schedules
+- Update session details
+- Track member attendance
+
+</td>
+<td align="center" width="33%">
+
+### 🟢 Member
+- View personal profile
+- Check membership status
+- View assigned trainer
+- Track session history
+
+</td>
+</tr>
+</table>
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Built With
 
-| Layer | Technology |
-|-------|-----------|
-| Backend | PHP (server-side logic & routing) |
-| Frontend | HTML5, CSS3, JavaScript |
-| Database | MySQL / MariaDB |
-| Server | Apache with `.htaccess` rewrite rules |
+<div align="center">
+
+<img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white" />
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" />
+<img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" />
+<img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" />
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
+<img src="https://img.shields.io/badge/Apache-D22128?style=for-the-badge&logo=apache&logoColor=white" />
+
+</div>
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Here's how you can help:
+Contributions, issues, and feature requests are welcome!
 
-1. **Fork** this repository
-2. **Create** a feature branch: `git checkout -b feature/your-feature-name`
-3. **Commit** your changes: `git commit -m "Add your feature"`
-4. **Push** to the branch: `git push origin feature/your-feature-name`
-5. **Open** a Pull Request
-
-Please make sure your code is clean, well-commented, and tested before submitting.
+1. **Fork** the project
+2. Create your feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add some amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. **Open a Pull Request**
 
 ---
 
-## 🐛 Bug Reports & Feature Requests
+## 📬 Contact
 
-Found a bug or have an idea? Open an [issue](https://github.com/tssamad802/iron-core/issues) and describe it in detail. All feedback is appreciated!
-
----
-
-## 📄 License
-
-This project is open-source and available under the [MIT License](LICENSE).
+**Developer:** [@tssamad802](https://github.com/tssamad802)  
+**Repository:** [github.com/tssamad802/iron-core](https://github.com/tssamad802/iron-core)
 
 ---
 
 <div align="center">
 
-Made with 💪 by [tssamad802](https://github.com/tssamad802)
+**If you find this project useful, please consider giving it a ⭐ — it means a lot!**
 
-*Forge your core. Build your legacy.*
+<br/>
+
+*Built with 💪 for fitness enthusiasts and gym owners.*
 
 </div>
