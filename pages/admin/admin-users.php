@@ -64,37 +64,9 @@ $roles = $controller->fetch_records('role');
     <div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
 
     <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-        <div class="sidebar-logo">
-            <div class="logo-icon"><img src="./images/logo.png" alt="IronCore"></div>
-            <div>
-                <div class="logo-text">IronCore</div>
-                <div class="logo-sub">Admin Panel</div>
-            </div>
-        </div>
-
-        <?php
-        require_once 'sidebar.php';
-        ?>
-
-        <div class="sidebar-footer">
-            <div class="sidebar-user">
-                <?php
-                $name = $auth->show_name();
-                $names = explode(' ', $name);
-                $initials = strtoupper(substr($names[0], 0, 1) . (isset($names[1]) ? substr($names[1], 0, 1) : ''));
-                ?>
-                <div class="avatar avatar-sm" style="width:36px;height:36px;font-size:13px;border-radius:8px;">
-                    <?php echo $initials; ?>
-                </div>
-                <div class="user-meta">
-                    <div class="name"><?php echo $auth->show_name(); ?></div>
-                    <div class="role">Super Admin</div>
-                </div>
-                <span class="user-arrow"></span>
-            </div>
-        </div>
-    </aside>
+    <?php
+    require_once 'sidebar.php';
+    ?>
 
     <!-- MAIN WRAP -->
     <div class="main-wrap">
